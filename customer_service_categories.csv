@@ -1,0 +1,79 @@
+Account Closure,Account not closed within TAT
+Account Closure,Procedure/status of account closure
+Account Closure,Request for Account Closure Form
+Account Opening,Account not opened
+Account Opening,Application form rejected for internal reasons
+Account Opening,New account opening request
+Account Opening,New account opening status
+Account Opening,Product Details/queries pertaining to opening of trading account
+Account Opening,Welcome Kit not received within TAT
+Bills and Statements,Contract note not received
+Bills and Statements,Enquiry on details in contract notes/E-Hastakshar/Profit and Loss Statement/STT/Margin Statement/Ledger *
+Bills and Statements,Ledger report/Profit and Loss Statement/STT/Margin Statement not received
+Bills and Statements,Request for Contract notes/E-Hastakshar
+Bills and Statements,Request for Ledger Report
+Bills and Statements,Request for Profit and Loss Statement/STT/Margin Statement
+Bills and Statements,Unable to view digital contract notes
+Brokerage,Discrepancy in Brokerage Rates/Calculation
+Brokerage,FKS activation Reversal
+Brokerage,Query on brokerage rates/calculation/FKS schemes
+Brokerage,Reduction in Brokerage Rate
+DP lien related,Bill/Charges details
+DP lien related,Demat transaction Statement/Holding Statement
+DP lien related,How to allocate shares for selling (DP lien marking)
+DP lien related,Request for Client Master List
+DP lien related,Shares not allocated in the DP Lien
+DP related,Queries pertaining to SBI DP
+Fund lien related,Assistance of Fund Lien/Transfer
+Fund lien related,Funds Inprocess
+IPO/MF,Credit of shares/dividend/bonus/refund/redemption not received
+IPO/MF,Holdings not updated(Bonds/Mutual Fund)
+IPO/MF,Mapping not done
+IPO/MF,Mutual Fund statement not received
+IPO/MF,NAV not updated
+IPO/MF,Order executed at wrong NAV
+IPO/MF,Request for Mutual Fund Statement
+IPO/MF,SIP not executed
+IPO/MF,Status/Process of KYC
+IPO/MF,Status/Process of Order placement/Allotment/Refund/Redemption
+Mapping,Fund/DP Lien Mapping not done
+Mapping,Incorrect mapping of Bank/Demat account number
+Mapping,Process/Status of demat/bank a/c mapping request
+Market Watch,Addition/Modification/Deletion of the script
+Market Watch,Assistance on PC settings for market watch
+Market Watch,Live Quotes not working
+Market Watch,Remote access for assistance in Market Watch-Team Viewer
+Modification,Modification request not processed
+Modification,PMLA/Running a/c received but not updated within TAT
+Modification,PMLA/Running a/c/Regulatory requirement fulfillment Status/process
+Modification,Process/Status of account modification
+Modification,Request for Account Modification form
+Others,Call dropped
+Others,Customer unable to provide authenticate himself
+Others,Enquiry about other SBI Products
+Others,Feedback/Suggestion about personnel
+Others,Unable to address customer due to system problem
+Password,Assistance on password unlock/generating new password
+Password,Initial Password status
+Password,Initial physical password not received
+Password,Login Assistance with new password
+Password,Request for unlocking/resetting Password
+Password not received on registered email-id,
+Query on Website/Browser,
+Service Request,
+Settlement,Compensation demanded by the client due to incorrect auction of shares
+Settlement,Complaint on Payout of Funds/Shares not received as per settlement
+Settlement,Shortage / Closeout details not updated
+Settlement,Status of Payout (cm calling before the T+2 settlement)
+Trade,Customer unable to place Order
+Trade,Dealer unable to place order due to Fast Trade/Asset Anywhere/Surveillance/Any System problem
+Trade,Discrepancy in limits
+Trade,Fresh Order/Order Modification/Cancellation for equity/IPO/MF & Bonds
+Trade,Order Inprocess
+Trade,Order Status/Trade Details/Net Position
+Trade,Request for Rates and Market Information
+Trade,Unable to view the entire qty in obligation
+Trade,Unauthorised Trades
+Website,Request for Demo
+Website,Unable to access website due to Technical Problem
+Website,Wrong details/ quotes/ info shown in site content/website not working

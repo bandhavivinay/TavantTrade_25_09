@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=.96, maximum-scale=.96, minimum-scale=.96, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<link rel="stylesheet" type="text/css" href="../css/position.css" />
+	<script src="../js/positioncell.jslocal" defer="defer"></script>
+	<script src="../js/knockout-2.2.0.jslocal" defer="defer"></script>
+	<script src="../js/diffusion.jslocal"></script>
+	<script src="../js/DiffusionKnockoutWrapper.jslocal"></script>
+</head>
+<!--<body onload="loadKnockoutData()" onunload="stopTimer()">-->
+<body onload="activateListeners()" onunload="unsubscribeSymbols()">
+<script>
+	var symbKeys=[];
+	var koInitialized = false;
+	var shouldtream='YES';
+	var positiontModel=null;
+	var headerArray = [];
+	var id = 0;
+	var clientId = Ti.App.clientId;
+	function activateListeners(){
+	positionModel = new PositionViewModel();
+	ko.applyBindings(positionModel);
+	Ti.API.info('this is the client id ##$%^&^$^%$^#&'+clientId);
+	}
+	connectionDetails.onDataFunction =  onPositionsDataUpdate;
+	var qty=[];
+	var buyA=[];
+	var sellA=[];
+	var productType=[];
+	var exchange=[];
+	var instrumentType=[];
+	function onPositionsDataUpdate(webClientMessage){
+		Ti.API.info('this is the response data'+webClientMessage.topic+'###################'+JSON.stringify(webClientMessage)+'hgduaysgduyasgdsad'+webClientMessage.messageCount);
+		 var symbolUpdate = [];
+		
+		if(webClientMessage.topic=='REPORTS/TEST/PSRS'){
+		if(webClientMessage.messageCount==0){
+			headerArray = webClientMessage.headers;
+			Ti.API.info('this is the header Arrray length'+headerArray.indexOf('subKey'));
+		}
+		else{
+		symbolUpdate.push(webClientMessage.records[0].fields[0]); //open value
+		symbolUpdate.push(webClientMessage.records[0].fields[1]);
+		symbolUpdate.push(webClientMessage.records[0].fields[2]);
+		symbolUpdate.push(webClientMessage.records[0].fields[3]);
+		symbolUpdate.push(webClientMessage.records[0].fields[4]);
+		symbolUpdate.push(webClientMessage.records[0].fields[5]);
+		symbolUpdate.push(webClientMessage.records[0].fields[6]);
+		symbolUpdate.push(webClientMessage.records[0].fields[7]);
+		symbolUpdate.push(webClientMessage.records[0].fields[8]);
+		symbolUpdate.push(webClientMessage.records[0].fields[9]);
+		symbolUpdate.push(webClientMessage.records[0].fields[10]);
+		symbolUpdate.push(webClientMessage.records[0].fields[11]);
+		symbolUpdate.push(webClientMessage.records[0].fields[12]);
+		symbolUpdate.push(webClientMessage.records[0].fields[13]);
+		symbolUpdate.push(webClientMessage.records[0].fields[14]);
+		symbolUpdate.push(webClientMessage.records[0].fields[15]);
+		symbolUpdate.push(webClientMessage.records[0].fields[16]);
+		symbolUpdate.push(webClientMessage.records[0].fields[17]);
+		symbolUpdate.push(webClientMessage.records[0].fields[18]);
+		symbolUpdate.push(webClientMessage.records[0].fields[19]);
+		symbolUpdate.push(webClientMessage.records[0].fields[20]);
+		Ti.API.info('this is positions symbol'+webClientMessage.topic+'3'+symbolUpdate[3]+'9'+symbolUpdate[10]+'11'+symbolUpdate[12]+'19'+symbolUpdate[20]+'qty'+qty);
+		
+		if(webClientMessage.records[0].fields[headerArray.indexOf('subKey')]!=undefined && webClientMessage.records[0].fields[headerArray.indexOf('subKey')]!=''){
+		var subText = 'SYMBOLS/QUOTES/'+webClientMessage.records[0].fields[headerArray.indexOf('subKey')];
+		subscribe(subText);
+		symbKeys.push(subText);
+		Ti.API.info('this is the header Arrray index of subkey'+headerArray.length);
+		var ss = symbKeys.length - 1;
+		positionModel.mapNewKeys(symbolUpdate,ss,headerArray);
+		qty[id]=symbolUpdate[headerArray.indexOf('netQty')];
+		buyA[id]=symbolUpdate[headerArray.indexOf('buyAmount')];
+		sellA[id]=symbolUpdate[headerArray.indexOf('sellAmount')];
+		productType[id]=symbolUpdate[headerArray.indexOf('productType')];
+		exchange[id]=symbolUpdate[headerArray.indexOf('exchange')];
+		instrumentType[id]=symbolUpdate[headerArray.indexOf('instrumentType')];
+		id=id+1;
+
+		}
+		}
+		
+		}
+		
+	    else{
+	    Ti.API.info('this is instrumentData'+webClientMessage.records[0].fields[13]+'qty'+qty+'buyA'+buyA+'sellA'+sellA+'ss');
+	    var symbolData=[];
+	    symbolData.push(webClientMessage.records[0].fields[13]);
+	    symbolData.push(webClientMessage.topic);
+	    Ti.API.info('hohohohohoh'+symbKeys.length);
+	    for(var i=0;i<symbKeys.length;i++){
+	    	Ti.API.info('this is symbol'+symbKeys[i]+'this is topic'+webClientMessage.topic);
+	    	if(symbKeys[i]==webClientMessage.topic){
+	    	symbolData.push(qty[i]);
+	    	symbolData.push(buyA[i]);
+	    	symbolData.push(sellA[i]);
+	    	symbolData.push(productType[i]);
+	    	symbolData.push(exchange[i]);
+	    	positionModel.updateSymbol(symbolData,i);
+	    	}
+	    	
+	    }
+	    
+	    }	
+	   // id++;
+	};
+	
+	function unsubscribeSymbols(){
+		for(var i=0;i<symbKeys.length;i++){
+			unsubscribe(symbKeys[i]);
+			if(i==symbKeys.length-1)
+			symbKeys=[];
+			id=0;
+		}
+	}
+	function makehttpRequest(){
+		var postdataforPositions = {
+		  "clientData":{},
+		  "requestId":"TEST",
+		  "clientID":"TEST",
+		  "exchange":"",
+		  "symbol":"",
+		  "productType":"",
+		  "instrumentType":""
+		};
+		var variable=new XMLHttpRequest();
+		variable.onreadystatechange=function()
+           {
+           	Ti.API.debug("I am calling data"+variable.status);
+         if (variable.readyState==4 && variable.status==404||variable.status==200)
+           {
+            
+           }
+         };
+		variable.open("POST","http://121.240.130.119:8081/api/trade/positions",true);
+		variable.setRequestHeader("Content-type","application/json");
+        variable.send(JSON.stringify(postdataforPositions));
+		
+		
+	}
+	
+	
+	function loadKnockoutData(){
+		Ti.API.debug('-----------111111111111111------------');
+		//positiontModel = new PositionViewModel();
+		//ko.applyBindings(positiontModel);
+		Ti.API.debug('-----------222222222222222------------');
+	}
+	function subscribeNow(){
+		Ti.API.info('this is the one'+DiffusionClient.isConnected());
+		if(DiffusionClient.isConnected()){
+		 subscribe('REPORTS/TEST/PSRS');	
+		 makehttpRequest();
+		};
+  		};
+  	function connectCallback(_status){
+	Ti.API.debug('connectCallback called'+_status);
+	
+	if(_status)
+	{
+		subscribeNow();
+	}
+	}
+	if(DiffusionClient.isConnected()){
+			Ti.API.debug('Diffusion is connected here ******************, can subscribe');
+			subscribeNow();
+		}else
+		{
+			Ti.API.debug('Diffusion is not connected here ******************,reconnect');
+			connectDiffusion(connectCallback);
+		}
+		
+</script>
+<table border=1 style="width:100%;">
+	<tbody data-bind="foreach: symbols">        
+				<!--<tr class="mainRow"  data-bind="style:{backgroundImage:rowImage}" onclick="openTrade(this)">	-->				
+					<tr class="mainRow"   onclick="openTrade(this)">	
+					<td class="hiddenRow" id="01">
+					<div data-bind= "text: subscriptionKey"></div>
+					<div data-bind="text: symbol"></div>
+					<div data-bind="text: exchange"></div>
+					<div data-bind="text: productType"></div>
+					<div data-bind="text: instrumentType"></div>
+					</td>
+					<td class="posTD1"  >
+						<p class="postTD1_block1_symbolNameText" data-bind="text: symbol">
+						</p>
+						<div class="postTD1_block1_ltp"  data-bind="text: ltp">
+						</div>
+					</td>
+					<td class="posTD2"  >
+						<div class="posTD2_avgCost" data-bind="text: avgCost">
+						</div>
+						<div class="posTD2_qty" data-bind="text: qty">
+						</div>
+					</td>
+					<td class="posTD3"  >
+						<div class="posTD3_pl" data-bind="text: pl,style:{color:plColor}">
+						</div>
+						<div class="posTD3_plPer"  data-bind="text: profit,style:{color:plColor}">
+						</div>
+						<div class="posTD3_productType"  data-bind="text: productType,style:{color:plColor}">
+						</div>
+					</td>
+						
+					<td class="hiddenData">
+						<div class="hiddenDivData" data-bind="text: idNo"></div>
+					</td>							
+				</tr>		
+    </tbody>
+</table>
+</body>
+</html> 

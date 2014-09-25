@@ -1,0 +1,136 @@
+//marquee implementation
+
+function marqueeCell(idNo,symbol,value,subscriptionKey) {
+    var self = this;
+	self.idNo = ko.observable(idNo);		
+    self.symbol = ko.observable(symbol);
+    self.subscriptionKey = ko.observable(subscriptionKey);
+	self.cellColor = ko.observable('green');
+	self.cellImage = ko.observable('url("../../images/up_green_arrow_small.png") no-repeat right');
+    self.symbValue = ko.observable(value);	
+}
+
+
+//model for the screen
+function MarqueeModel() {
+	
+    var self = this;
+        
+    //marquee data
+    self.marqueeSymbols = ko.observableArray([
+        // new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+	    // new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+		  // new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+		// new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+		// new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+		// new marqueeCell(0,"ACROW", 375.86),
+        // new marqueeCell(1,"LTE", 278.50),
+		// new marqueeCell(2,"TATA",370.20),
+		// new marqueeCell(3,"PATA",360.86),
+		// new marqueeCell(4,"BATA",309.50),
+		// new marqueeCell(5,"INFY",342.46),
+		
+		
+		
+    ]);	
+    
+    self.updateSymbol = function(symbData){
+    	    	
+    	var wlArray = self.marqueeSymbols();
+    	// Ti.API.debug('Update meant to happen here: LENGTH OF ARRAY ' + symbData);
+    	for(var i = 0; i < wlArray.length; i++){
+    		// Ti.API.debug('Original: ' + wlArray[i].subscriptionKey());
+    		// Ti.API.debug('Updated: ' + symbData[0]);
+    		
+    		
+    		if(wlArray[i].subscriptionKey() == symbData[0]){
+    			// Ti.API.debug('Original: ' + wlArray[i].symbValue());
+    			// Ti.API.debug('Updated: ' + symbData[2]);
+    			var newValue = symbData[2];
+    			if(newValue > wlArray[i].symbValue()){
+					wlArray[i].cellColor('green');
+					wlArray[i].cellImage('url("../../images/up_green_arrow_small.png") no-repeat right');
+				}else{
+					wlArray[i].cellColor('red');
+					wlArray[i].cellImage('url("../../images/down_red_arrow_small.png") no-repeat right');
+				}
+    			wlArray[i].symbValue(newValue);
+    			
+
+    		}
+    	}
+    	
+    };
+    
+    self.removeSymbols = function(e){    	
+    	Ti.API.debug('----removing all the symbols from knockout----');
+    	self.marqueeSymbols.removeAll();     	
+    };
+    // self.testme=function(e){
+    	// //alert('clickckkkkkkkkkk');
+    	// self.marqueeSymbols.removeAll();
+    // }
+    
+    self.getLength=function(e){
+    	return self.marqueeSymbols().length;
+    };
+    
+    self.removeAllSymbols=function(e){
+       	self.marqueeSymbols.removeAll();
+    };
+    
+    self.mapNewKeys=function(e){	
+      for(var i=0; i < e.length; i++){		
+			self.marqueeSymbols.push(new marqueeCell(i,e[i].symbol,0,e[i].subscriptionKey));
+	  };	
+    }
+    
+    
+    
+    
+    // //generating random values for the marquee every 3 seconds
+     // setInterval(function(){marqValueGen()},3000);
+     // marqValueGen = function(){
+     	// var marqueeArray = self.marqueeSymbols();
+			// var j = Math.floor(Math.random() *  marqueeArray.length);
+			// console.log(marqueeArray.length + 'random number'+ j);
+			// var newValue = (Math.random()*10 + 300).toFixed(2);
+			// console.log('New Value: ' + newValue + '  Old Value: '+ marqueeArray[j].symbValue());
+			// if(newValue > marqueeArray[j].symbValue()){
+				// marqueeArray[j].cellColor('green');
+				// marqueeArray[j].cellImage('url("../../images/green_arrow.png") no-repeat right');
+			// }else{
+				// marqueeArray[j].cellColor('red');
+				// marqueeArray[j].cellImage('url("../../images/red_arrow.png") no-repeat right');
+			// }
+// 			
+			// marqueeArray[j].symbValue(newValue);
+    // };
+}
+
+// ko.applyBindings(new MarqueeModel());

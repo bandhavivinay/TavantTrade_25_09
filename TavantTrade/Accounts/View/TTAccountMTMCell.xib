@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="160" id="E7T-sv-CEi" customClass="TTAccountMTMCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E7T-sv-CEi" id="iMl-uI-41n">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Margin used for orders and trade" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="EzM-dh-KUO">
+                        <rect key="frame" x="14" y="3" width="160" height="36"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.20784313730000001" green="0.4431372549" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1q-kZ-eTS">
+                        <rect key="frame" x="255" y="11" width="56" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unrealized MTM Loss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-rY-RmF">
+                        <rect key="frame" x="14" y="72" width="131" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Realized MTM Gain" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfy-SH-E1W">
+                        <rect key="frame" x="14" y="102" width="118" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cnC Sales Proceeds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVy-Tg-WzN">
+                        <rect key="frame" x="14" y="135" width="122" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cl1-7L-0vu">
+                        <rect key="frame" x="281" y="43" width="27" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbZ-Q7-8Ot">
+                        <rect key="frame" x="281" y="69" width="27" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0G-ur-39h">
+                        <rect key="frame" x="281" y="102" width="27" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Margin used" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeA-GV-5sY">
+                        <rect key="frame" x="14" y="43" width="75" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Etr-Cz-hqm">
+                        <rect key="frame" x="281" y="135" width="27" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="LVy-Tg-WzN" secondAttribute="bottom" constant="8" id="1wS-9O-iPF"/>
+                    <constraint firstItem="mbZ-Q7-8Ot" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="69" id="2OU-X8-gJ6"/>
+                    <constraint firstItem="EzM-dh-KUO" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="3" id="41b-mK-hQf"/>
+                    <constraint firstItem="2vx-rY-RmF" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="72" id="4Lv-7z-RXj"/>
+                    <constraint firstAttribute="trailing" secondItem="e1q-kZ-eTS" secondAttribute="trailing" constant="9" id="65R-od-2Hd"/>
+                    <constraint firstItem="2vx-rY-RmF" firstAttribute="leading" secondItem="iMl-uI-41n" secondAttribute="leading" constant="14" id="6tA-fg-je0"/>
+                    <constraint firstAttribute="trailing" secondItem="cl1-7L-0vu" secondAttribute="trailing" constant="12" id="7lb-hm-TIq"/>
+                    <constraint firstAttribute="trailing" secondItem="mbZ-Q7-8Ot" secondAttribute="trailing" constant="12" id="FnL-Ou-1Kt"/>
+                    <constraint firstItem="EeA-GV-5sY" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="43" id="QX8-37-HP8"/>
+                    <constraint firstItem="EzM-dh-KUO" firstAttribute="leading" secondItem="iMl-uI-41n" secondAttribute="leading" constant="14" id="TiE-Jf-bjT"/>
+                    <constraint firstItem="Kfy-SH-E1W" firstAttribute="leading" secondItem="iMl-uI-41n" secondAttribute="leading" constant="14" id="Z8H-sK-Mjm"/>
+                    <constraint firstItem="LVy-Tg-WzN" firstAttribute="leading" secondItem="iMl-uI-41n" secondAttribute="leading" constant="14" id="aoi-wE-IqH"/>
+                    <constraint firstAttribute="bottom" secondItem="Etr-Cz-hqm" secondAttribute="bottom" constant="8" id="hvz-NY-o8a"/>
+                    <constraint firstItem="o0G-ur-39h" firstAttribute="top" secondItem="mbZ-Q7-8Ot" secondAttribute="bottom" constant="17" id="icn-qj-5WC"/>
+                    <constraint firstItem="cl1-7L-0vu" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="43" id="ktw-k3-vu2"/>
+                    <constraint firstItem="EeA-GV-5sY" firstAttribute="leading" secondItem="iMl-uI-41n" secondAttribute="leading" constant="14" id="pby-dN-R2T"/>
+                    <constraint firstAttribute="trailing" secondItem="Etr-Cz-hqm" secondAttribute="trailing" constant="12" id="q98-wN-Kzl"/>
+                    <constraint firstItem="o0G-ur-39h" firstAttribute="baseline" secondItem="Kfy-SH-E1W" secondAttribute="baseline" id="qIU-fb-Rzn"/>
+                    <constraint firstItem="e1q-kZ-eTS" firstAttribute="top" secondItem="iMl-uI-41n" secondAttribute="top" constant="11" id="u5U-nj-IPa"/>
+                    <constraint firstAttribute="trailing" secondItem="o0G-ur-39h" secondAttribute="trailing" constant="12" id="ykz-6v-cMy"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="cncSalesProceeds" destination="Etr-Cz-hqm" id="8Hf-OW-FhM"/>
+                <outlet property="cncSalesProceedsTitle" destination="LVy-Tg-WzN" id="0Un-0V-A9g"/>
+                <outlet property="marginUsed" destination="cl1-7L-0vu" id="Kka-nX-QEw"/>
+                <outlet property="marginUsedForOrders" destination="e1q-kZ-eTS" id="kYV-lL-cbf"/>
+                <outlet property="marginUsedTitle" destination="EeA-GV-5sY" id="edD-xh-CvV"/>
+                <outlet property="realizedmtmGain" destination="o0G-ur-39h" id="SOQ-Mu-Koh"/>
+                <outlet property="realizedmtmGainTitle" destination="Kfy-SH-E1W" id="utN-GN-Fxd"/>
+                <outlet property="unrealizedmtmLoss" destination="mbZ-Q7-8Ot" id="5zY-7y-sIY"/>
+                <outlet property="unrealizedmtmLossTitle" destination="2vx-rY-RmF" id="oUJ-B8-Kit"/>
+                <outlet property="valueLabel" destination="EzM-dh-KUO" id="rRm-ex-vmD"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

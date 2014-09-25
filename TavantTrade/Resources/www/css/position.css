@@ -1,0 +1,120 @@
+table{
+	border-collapse:collapse;
+	
+	font-family:Arial,Helvetica,sans-serif;
+}
+body{
+	margin:0;
+	color:#fff;
+	background-color:#383B40;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+thead{
+	
+	background-color:#C0C0C0;
+}
+
+th{
+	text-align:left;
+}
+tr{
+	border-color:#252525;
+}
+td{
+	border-left:none;
+	border-right:none;
+}
+.hiddenData{
+	display:none;
+}
+.mainRow{
+	font-size:small;
+	height:65px;
+	width:307px;
+}
+
+.posTD1{
+	padding-left:5px;
+	font-size:100%;
+	width:115px;	
+	background-repeat:no-repeat;
+	background-position: 50% 0;
+	vertical-align:top;
+	text-align:center;
+}
+
+.postTD1_block1_symbolNameText{
+	margin:0px;
+	padding: 4px 0 2px 0;
+	text-align:center;
+	font-size:100%;
+	font-weight:normal;
+	color: white;
+	width:112px;
+	word-wrap: break-word;
+	vertical-align: top;
+	height:35px;
+	}
+.postTD1_block1_ltp{
+	margin-left:20px;
+	padding: 2px 0;
+	text-align:center;
+	vertical-align:bottom;
+	height:15px;
+	width:75px;
+}
+
+.posTD2{
+	padding-left:5px;
+	font-size:100%;
+	width:75px;	
+	background-repeat:no-repeat;
+	background-position:50% 0;
+	vertical-align:top;
+	text-align:center;
+}
+.posTD2_avgCost{
+	margin:0px 0 0 2px;
+	padding: 4px 0 2px 0;
+	text-align:center;
+	vertical-align:top;
+	height:35px;
+	}
+.posTD2_qty{
+	margin-left:2px;
+	padding: 2px 0;
+	text-align:center;
+	vertical-align:bottom;
+	height:15px;
+}
+.posTD3{
+	width:75px;	
+	font-size:100%;
+	background-repeat:no-repeat;
+	background-position:50% 0;
+	text-align:center;
+	vertical-align:top;
+}
+.posTD3_pl{
+	margin:0px 0 0 5px;
+	padding: 2px 0;
+	text-align:center;
+	height:15px;
+}
+.posTD3_plPer{
+	margin-left:2px;
+	padding: 2px 0;
+	text-align:center;
+	height:17.5px;
+}
+.posTD3_productType{
+	margin-left:2px;
+	padding: 2px 0;
+	text-align:center;
+	height:15px;
+}
+.hiddenRow{
+	display:none;
+}

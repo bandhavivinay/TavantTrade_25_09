@@ -1,0 +1,488 @@
+/**
+ * @author Tavant
+ */
+
+function unloadfunc(){
+	Ti.App.removeEventListener('app:getData',getDataFromTitanium);
+	disconnectDiffusion();
+	//alert('removing events');
+}
+function custom_func(obj){
+	var className = $(obj).attr('class');
+	var currId= $(obj).attr('id');
+	$('.'+className).each(function(i, obj1) {
+	    $(obj1).removeClass("selectedTblData");
+	});
+	$('#'+currId).addClass("selectedTblData");
+	var subkey= $(obj).attr('subscription');
+	var symbol= $('#symbolVal').val();
+	var exchange=$('#exchangeVal').val();
+	var instrument=$('#instrumentVal').val();
+	var company=$('#companyVal').val(); 
+	Ti.App.fireEvent('app:opentradescreen',{'companyName':company,'subscriptionKey':subkey,'symbol':symbol,'instType':instrument,'exchange':exchange});	
+}
+var diffusionconnectedCallback=null;
+
+function onLostFunction(){
+	Ti.API.info('connectionLost');
+}
+function onConnectionReject(){
+	Ti.API.info('connection rejected');
+}
+
+var connectionDetails = {
+			debug : false,
+			XHRURL : "http://" + "121.240.130.119:80",
+			onDataFunction : onDataEvent,
+			onCallbackFunction : onCallbackEvent,
+			disableWS : true,
+			disableFlash : true,
+			disableSilverlight : true,
+			disableXHR : false,			
+			onLostConnectionFunction : onLostFunction,
+			onConnectionRejectFunction : onConnectionReject,
+			XHRretryCount:1
+};
+	
+function onDataEvent(webClientMessage){
+	//Ti.API.info("data"+webClientMessage); 	
+};
+ 
+function onCallbackEvent(isConnected){
+	Ti.API.info("Diffusion Connected status"+isConnected);
+	diffusionconnectedCallback(isConnected);
+};
+
+function connectDiffusion(_callback){
+	diffusionconnectedCallback=_callback;
+	if (DiffusionClient.isConnected()) {
+		Ti.API.info("diffusin already connected");
+		diffusionconnectedCallback(true);
+		return;	
+  	}
+  	DiffusionClient.connect(connectionDetails);
+};
+
+function disconnectDiffusion(){
+	DiffusionClient.close();
+};
+function subscribe(symbol) {
+	Ti.API.info("symbol "+symbol);
+	DiffusionClient.subscribe(symbol);
+};
+function unsubscribe(symbol) {
+	DiffusionClient.unsubscribe(symbol);
+};
+
+
+Ti.App.addEventListener('app:disconnect',disconnectStreaming);
+function disconnectStreaming(){
+	disconnectDiffusion();
+}
+
+
+$(window).load(function(){
+//jQuery( document ).ready(function($ ) {
+	var self;
+	var url,json,apiparams,expireJSON;
+	var strikePriceArr = [];
+	var callScriptionKey = [];
+	var putScriptionKey = [];
+	var strikeArr=[];
+	var callArr=[];
+	var putArr=[];
+	var expiryArr=[];
+	var currExpire="";
+   var getTradingApi=function($param){
+   	var apibase="http://121.240.130.119:8081/api/instruments/";
+   	var obj = jQuery.parseJSON( $param );
+   		switch(obj.api_type){
+   			case 'api_expiry':
+   			return apibase+"expiry/"+obj.symbol+"/"+obj.exchange+"/"+obj.instrumentType;
+   			break;
+   			case 'api_strike':
+   			return apibase+"option/"+obj.symbol+"/"+obj.exchange+"/"+obj.expireDate;
+   			break;
+   		}   	
+   };
+   var parseStrike=function(data){
+   	json=data;
+   	connectionDetails.onDataFunction =  onSymbolDataUpdate;	
+   	connectDiffusion(connectCallback);
+   };
+   
+    var parseExpiry=function(data){
+   	json=data;
+   	
+    $.each(json,function(i,item){
+   	expiryArr.push(item);
+	 });
+    if(expiryArr.length >0){
+    	expire=expiryArr[0]; 
+    	if(expiryArr.length >2){
+    	expire=expiryArr[1]; 
+    	}
+    	if(currExpire!="")
+    	expire=currExpire; 
+        apiparams= '{ "api_type": "api_strike","symbol": "'+symbol+'","exchange": "'+exchange+'","expireDate": "'+expire+'"}';
+    	getTradingJSON(getTradingApi(apiparams));
+    }else{
+    	alert("Selected "+symbol+" has no expire date.");
+    	return false;
+    }
+  
+   };
+  var executescript=true;
+    var onSymbolDataUpdate = function(webClientMessage){
+   	if($("#updateVal").val() > 0 ){
+    	   	var askVal=webClientMessage.records[0].fields[2]; 
+    	   	var bidVal=webClientMessage.records[0].fields[10];
+    	   	var ltpVal=webClientMessage.records[0].fields[13];
+    	   	var volVal=webClientMessage.records[0].fields[16];
+    	   	var oiVal=webClientMessage.records[0].fields[24];
+    	   	Ti.API.error('askVal-12----'+webClientMessage.records[0].fields[2]);
+     	   	if(askVal.length <1){
+     	   	   askVal=0;
+    	   	   Ti.API.error('askVal-----'+webClientMessage.records[0].fields[2]);
+    	   	}
+    	   	if(bidVal.length <1){
+    	   		bidVal=0;
+    	   	   Ti.API.error('bidVal-----'+webClientMessage.records[0].fields[10]);
+    	   	}
+    	   	if(ltpVal.length <1){
+    	   		ltpVal=0;
+    	   	   Ti.API.error('ltpVal-----'+webClientMessage.records[0].fields[13]);	
+    	   	}
+    	   	if(volVal.length <1){
+    	   		volVal=0;
+    	   	   Ti.API.error('volVal-----'+webClientMessage.records[0].fields[16]);
+    	   	}
+    	   	if(oiVal.length <1){
+    	   		oiVal=0;
+    	   	  // Ti.API.error('oiVal-----'+webClientMessage.records[0].fields[24]);
+    	   	}
+    	   	var message=webClientMessage;
+    	   	var topic=message.topic;
+    	   	var fieldId = topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');    		
+    	   	var element='';
+    	   	element=  document.getElementById("ask__"+fieldId);
+    	   	if (typeof(element) != 'undefined' && element != null)
+    	   	{
+    	   		document.getElementById("ask__"+fieldId).innerHTML=askVal;
+    	   	}
+    	   	element=  document.getElementById("bid__"+fieldId);
+    	   	if (typeof(element) != 'undefined' && element != null)
+    	   	{
+    	   		document.getElementById("bid__"+fieldId).innerHTML=bidVal;
+    	   	}
+    	   	element=  document.getElementById("ltp__"+fieldId);
+    	   	if (typeof(element) != 'undefined' && element != null)
+    	   	{
+    	   		document.getElementById("ltp__"+fieldId).innerHTML=ltpVal;
+    	   	}
+    	   	element=  document.getElementById("vol__"+fieldId);
+    	   	if (typeof(element) != 'undefined' && element != null)
+    	   	{
+    	   		document.getElementById("vol__"+fieldId).innerHTML=volVal;
+    	   	}
+    	   	element=  document.getElementById("oi__"+fieldId);
+    	   	if (typeof(element) != 'undefined' && element != null)
+    	   	{
+    	   		document.getElementById("oi__"+fieldId).innerHTML=oiVal;
+    	   	}
+    	   	var len=self.callsDataArray().length;
+   	} 	 
+    	
+};
+
+function updateSlider(obj){
+	alert(1);
+}
+function  makeRow(strikeArr,callArr,putArr,expiryArr,json){
+
+	 counterItem=0;
+	 counterItem1=0;
+	 if(myVar!=0)
+	 clearInterval(myVar);
+	 if(myVar1!=0)
+		 clearInterval(myVar1);
+
+	var tbodyHeight=strikeArr.length * 46+46;
+	tblheight=tbodyHeight+"px";
+	document.getElementById("preloader").style.height=tblheight;
+document.getElementById("calldivslider").style.height=tblheight;
+document.getElementById("calldivslider_sbitSlider1").style.height=tblheight;
+document.getElementById("calldivslider_slider").style.height=tblheight;
+document.getElementById("calldivslider_item").style.height=tblheight;
+
+document.getElementById("putdivslider").style.height=tblheight;
+document.getElementById("putdivslider_sbitSlider2").style.height=tblheight;
+document.getElementById("putdivslider_slider").style.height=tblheight;
+document.getElementById("putdivslider_item").style.height=tblheight;
+
+		
+		
+	 $("#strike_body").html("");
+	 $("#call_ask_body").html("");
+	 $("#call_bid_body").html("");
+	 $("#call_ltp_body").html("");
+	 $("#call_vol_body").html("");
+	 $("#call_oi_body").html("");
+	 $("#put_ask_body").html("");
+	 $("#put_bid_body").html("");
+	 $("#put_ltp_body").html("");
+	 $("#put_vol_body").html("");
+	 $("#put_oi_body").html("");
+	 
+	var width1= $("#expire_date_body").width();
+	
+	var expireBody='';
+	var cntItem=expiryArr.length;
+	var increment=width1/cntItem;
+
+	 $('.sbitSlider').sbitSlider('removeSlide', 1);
+	 $('.sbitSlider').sbitSlider('removeSlide', 2);
+	 $('.sbitSlider').sbitSlider('removeSlide', 3);
+	 $("#expire_date_body").html("");
+
+	 $.each(expiryArr,function(i,item){ 
+		var pos=i+1;
+		var class1='';
+		if(item==expire){
+			class1=" midDate";
+		}
+		expireBody=" <div class = 'item"+class1+"' style='float:left;text-align:center;' >	<span style='text-align:center;' >"+item+"</span></div>";
+				 width1=width1+increment;
+				 
+				 $('.sbitSlider').sbitSlider('addSlide', expireBody, pos);
+				 $('.sbitSlider').sbitSlider('update');
+	 });
+		$('.fluidHeight .item').click(function(e){
+			var cls=$(this).attr('class');
+			
+			var curdate;
+			curdate=$(this).children('span').html();
+			
+			currExpire=curdate;
+			expire=currExpire;
+			
+			getDataFromTitanium({"symbol": symbol,"exchange": exchange,"instrument": instrument,"expire":expire});
+
+		});
+
+	var strikeBody='';
+	 $.each(strikeArr,function(i,item){  
+		 strikeBody=strikeBody+"<tr class='row2'><td class='cls_strike_"+i+"' id='strike__"+i+"' >"+item.strikePrice+"<td></tr>"
+		 
+	 });
+	 $("#strike_body").html(strikeBody);
+	 var callAskBody=callBidBody=callLtpBody=callVolBody=callOiBody='';
+	 $.each(callArr,function(i,item){ 
+			
+		 callAskBody=callAskBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_call_"+i+"' id='ask__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.ask+"<td></tr>"	;	
+		 callBidBody=callBidBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_call_"+i+"' id='bid__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.bid+"<td></tr>"	;	 
+		 callLtpBody=callLtpBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_call_"+i+"' id='ltp__"+item.subscriptionKey+"'  onclick='custom_func(this)'>"+item.ltp+"<td></tr>"	;	 
+		 callVolBody=callVolBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_call_"+i+"' id='vol__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.vol+"<td></tr>"	;	 
+		 callOiBody=callOiBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_call_"+i+"' id='oi__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.oi+"<td></tr>"	;	 
+	 });	 
+	 $("#call_ask_body").html(callAskBody);
+	 $("#call_bid_body").html(callBidBody);
+	 $("#call_ltp_body").html(callLtpBody);
+	 $("#call_vol_body").html(callVolBody);
+	 $("#call_oi_body").html(callOiBody);
+	 var putAskBody=putBidBody=putLtpBody=putVolBody=putOiBody='';
+	 $.each(putArr,function(i,item){  
+		 putAskBody=putAskBody+"<tr class='row'><td subscription='"+item.custVal+"' class='cls_put_"+i+"' id='ask__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.ask+"<td></tr>"	;	
+		 putBidBody=putBidBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_put_"+i+"' id='bid__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.bid+"<td></tr>"	;	 
+		 putLtpBody=putLtpBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_put_"+i+"' id='ltp__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.ltp+"<td></tr>"	;	 
+		 putVolBody=putVolBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_put_"+i+"' id='vol__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.vol+"<td></tr>"	;	 
+		 putOiBody=putOiBody+"<tr class='row'><td subscription='"+item.custVal+"'  class='cls_put_"+i+"' id='oi__"+item.subscriptionKey+"' onclick='custom_func(this)'>"+item.oi+"<td></tr>"	;	 
+	 });	 
+	 $("#put_ask_body").html(putAskBody);
+	 $("#put_bid_body").html(putBidBody);
+	 $("#put_ltp_body").html(putLtpBody);
+	 $("#put_vol_body").html(putVolBody);
+	 $("#put_oi_body").html(putOiBody);	 
+	 
+	
+	 
+	 var itemCallArr= new Array();
+	 var itemPutArr= new Array();
+	 $.each(json,function(i,item){
+		var callval= item.callOption.subscriptionKey;
+		var putval=  item.putOption.subscriptionKey;
+		itemCallArr.push(callval);
+		itemPutArr.push(putval);
+		 Ti.API.error("gggg-"+i);	
+
+        });
+	  myVar=setInterval(function() {
+		 	var cnttmp=counterItem;
+		 	Ti.API.error("wwwwwww-"+itemCallArr.length+"--"+cnttmp);	
+		 	if(itemCallArr.length > cnttmp)
+		 		Ti.API.error("xxxx-"+counterItem+"--"+itemCallArr[counterItem]);	
+		 	else{
+		 	
+		 		clearInterval(myVar);
+		 	}
+		 		
+			 mySubscribe(itemCallArr[counterItem],cnttmp);
+			  }, 100);
+	
+	 
+	  myVar1=setInterval(function() {
+		 	var cnttmp=counterItem1;
+		 	Ti.API.error("wwwwwww-"+itemPutArr.length+"--"+cnttmp);	
+		 	if(itemPutArr.length > cnttmp)
+		 		Ti.API.error("xxxx-"+counterItem1+"--"+itemPutArr[counterItem1]);	
+		 	else{
+		 	Ti.App.fireEvent('force2hide', {});
+		 		jQuery("#preloader").fadeOut("slow");
+		 		clearInterval(myVar1);
+		 	}
+		 		
+			 mySubscribe1(itemPutArr[counterItem1],cnttmp);
+			  }, 150);
+	
+}
+var myVar=0;
+var myVar1=0;
+var counterItem=0;
+var counterItem1=0;
+function mySubscribe1(item,cnttmp)
+{ 	
+	counterItem1++;
+	Ti.API.error("itemval-456");
+	if(item!=undefined && item!=null){
+		Ti.API.error("itemval-"+counterItem+"--"+cnttmp+"--"+counterItem);	
+		subscribe('SYMBOLS/QUOTES/' + item);
+	}
+	
+
+}
+function mySubscribe(item,cnttmp)
+{ 	
+	counterItem++;
+	Ti.API.error("itemval-123");
+	if(item!=undefined && item!=null){
+		Ti.API.error("itemval-"+counterItem+"--"+cnttmp+"--"+counterItem);
+		subscribe('SYMBOLS/QUOTES/' + item);
+	}
+	
+	
+
+}
+  function connectCallback(_status){
+  	
+	Ti.API.debug('connectCallback called'+_status);
+	Ti.App.fireEvent('app:closeindicator',{});
+	if(_status)
+	{
+				 
+		
+		 $.each(json,function(i,item){
+		 	//alert(item.callOption.tradeSymbol);
+			 var callsubkey=item.callOption.subscriptionKey;
+			 var putsubkey=item.putOption.subscriptionKey;
+		 	var callKey='SYMBOLS/QUOTES/' + callsubkey;
+		 	var putKey='SYMBOLS/QUOTES/' + putsubkey;
+		 	
+		 	
+		 	var callKey = callKey.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+		 	var putKey = putKey.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+		 	strikeArr.push({strikePrice: item.strikePrice, tradeSymbolCE: item.callOption.tradeSymbol, tradeSymbolPE: item.putOption.tradeSymbol});
+		 	callArr.push({custVal:callsubkey,strikePrice: item.strikePrice,subscriptionKey:callKey, tradeSymbol: item.callOption.tradeSymbol,ask:"0",bid:"0",ltp:"0",vol:"0",oi:"0"});
+		 	putArr.push({custVal:putsubkey,strikePrice: item.strikePrice,subscriptionKey: putKey, tradeSymbol: item.putOption.tradeSymbol,ask:"0",bid:"0",ltp:"0",vol:"0",oi:"0"});
+   	 		strikePriceArr.push(item.strikePrice);
+       });
+
+		 makeRow(strikeArr,callArr,putArr,expiryArr,json);
+
+ 	}
+}
+  
+  
+	var getTradingJSON=function($url){
+	var url=$url;
+	$.ajax({
+        url : url,
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+ 
+        		parseStrike(data);
+        		
+                
+        },
+        error: function(data) { alert("API fetching error"+data); },
+        });
+	
+	};
+	
+	var getExpiryJSON=function($url){
+	var url=$url;
+	Ti.API.error("API"+url);
+	$.ajax({
+        url : url,
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+        	Ti.API.error("API EXPIRY DATA"+data);
+        		parseExpiry(data);
+        		
+                
+        },
+        error: function(data) { alert("API fetching error"+data); },
+        });
+	
+	
+	
+	
+	};
+	
+	
+	
+	var symbol="";
+	var exchange="";
+	var instrument="";
+	var expire="";
+	var compName="";
+	var getDataFromTitanium=function (e){
+	Ti.App.fireEvent('force2loadData', {});
+		jQuery("#preloader").fadeIn("fast");
+	
+		disconnectDiffusion(); 
+		Ti.API.error("Webview input data"+JSON.stringify(e));
+		symbol=e.symbol;
+		exchange=e.exchange;
+		instrument=e.instrument;
+		compName=e.name;
+		
+		
+		 strikePriceArr = [];
+		 callScriptionKey = [];
+		 putScriptionKey = [];
+		 strikeArr=[];
+		 callArr=[];
+		 putArr=[];
+		 expiryArr=[];
+		
+		$('#symbolVal').val(symbol);
+		$('#exchangeVal').val(exchange);
+		$('#instrumentVal').val(instrument);
+		$('#companyVal').val(compName);
+		$('#symboldiv').html(symbol);
+		$('#companyname').html(compName);
+	
+		
+		apiparams= '{ "api_type": "api_expiry","symbol": "'+symbol+'","exchange": "'+exchange+'","instrumentType": "'+instrument+'"}';
+		getExpiryJSON(getTradingApi(apiparams));	
+
+	   };
+		
+		
+	Ti.App.addEventListener('app:getData',getDataFromTitanium);
+	
+	getDataFromTitanium({"symbol":"SBIN","exchange":"NSE","instrument":"OPTSTK","name":"STATE BANK OF INDIA","expire":""});
+	
+});

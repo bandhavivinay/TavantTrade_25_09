@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Marquee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<link rel="stylesheet" type="text/css" href="../css/watchlistStyle.css"/>
+<!-- <script src="http://192.168.147.197/knockout-2.1.0.js" defer="defer"></script> -->
+<script src="../js/knockout-2.2.0.jslocal"></script>
+<script src="../js/marquee.jslocal"></script>
+<script src="../js/diffusion.jslocal"></script>
+<script src="../js/DiffusionKnockoutWrapper.jslocal"></script>
+
+</head>
+
+<body onload="activateListeners()">
+<script>
+	var symbKeys=null;
+	var koInitialized = false;
+	var marqueeModel=null;
+	var shouldtream='YES';
+	function activateListeners(){
+		marqueeModel = new MarqueeModel();		
+		ko.applyBindings(marqueeModel);	
+		connectionDetails.onDataFunction =  onSymbolDataUpdate;			
+		Ti.App.addEventListener('app:ticker:subscribe',subscribeSymbols);
+		Ti.App.addEventListener('app:ticker:unsubscribe',unsubscribeSymbs);
+		Ti.App.addEventListener('app:ticker:removeWlListeners', removeListeners);
+		Ti.App.addEventListener('app:disconnect',disconnectStreaming);
+	}
+	
+	var subscribeSymbols = function(e){
+		   Ti.API.error("Getting tickerdata in html");
+		  // alert(document.getElementById("ticker_marquee"));
+		  // document.getElementById("ticker_marquee").stop();
+			if(marqueeModel.getLength()>0){
+				marqueeModel.removeAllSymbols();
+				unsubSymbols(symbKeys);
+			}
+			symbKeys = e.symbolData.value;
+			//alert(symbKeys);
+		    shouldtream=e.symbolData.shouldStream;
+			marqueeModel.mapNewKeys(symbKeys);	
+			credentials.username = e.symbolData.clientId;
+			if(shouldtream==='YES'||shouldtream==='NO'){
+				  Ti.API.error("Checking diffusion is connected"+shouldtream);
+				if(DiffusionClient.isConnected()){
+					Ti.API.error("Diffusion is connected");
+			        subscribeNow(symbKeys);
+			        Ti.App.fireEvent('app:closeindicator',{});
+		        }else{
+		        	Ti.API.error("connect to diffusion");
+		        	connectDiffusion(connectCallback);
+		        }
+			}else {
+				Ti.App.fireEvent('app:closeindicator',{});
+			}			
+	};
+	
+	
+	function connectCallback(_status){
+		Ti.API.error("calling diffusion callback");
+		Ti.App.fireEvent('app:closeindicator',{});
+		if(_status)
+		{
+			subscribeNow(symbKeys);
+		}
+		
+    }
+	
+	
+	var unsubscribeSymbs = function(e){ //unsubcribes symbols from knockout and diffusion
+			marqueeModel.removeAllSymbols();
+			unsubSymbols(symbKeys);
+	};
+	
+	
+	function subscribeNow(symbolsKeys){
+		//document.getElementById("ticker_marquee").start();
+		//Ti.App.fireEvent('app:closetickerindicator',{});  // added fopr removing the ticker
+			if(DiffusionClient.isConnected()){
+				Ti.API.debug('find Diffusion is already connected');
+				for(var i = 0; i < symbolsKeys.length ;i++){
+					if(shouldtream==='NO'){
+						fetch('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);
+					}else{
+					subscribe('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);	
+					}
+				}
+			}
+	  };
+	  
+	var unsubSymbols = function(symbolsKeys){
+			if(DiffusionClient.isConnected()){
+				for(var i = 0; i < symbolsKeys.length ;i++){
+					unsubscribe('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);	
+				}
+			}
+		};  
+	  
+	  function disconnectStreaming(){
+	   disconnectDiffusion();
+    }
+	  
+	
+	var onSymbolDataUpdate = function(webClientMessage){
+		    Ti.API.error("getting webclient message");	
+			var symbolUpdate = [];
+			symbolUpdate.push((webClientMessage.topic).replace('SYMBOLS/QUOTES/',''));
+			symbolUpdate.push(webClientMessage.records[0].fields[4]); //open value
+			symbolUpdate.push(webClientMessage.records[0].fields[13]); //last price
+			symbolUpdate.push(webClientMessage.records[0].fields[6]); // +/- indicator value
+			symbolUpdate.push(webClientMessage.records[0].fields[7]); //change difference value		
+			symbolUpdate.push(webClientMessage.records[0].fields[2]); //high value
+			symbolUpdate.push(webClientMessage.records[0].fields[3]); //low value
+			symbolUpdate.push(webClientMessage.records[0].fields[10]); //bid value
+			symbolUpdate.push(webClientMessage.records[0].fields[12]); //ask value
+			marqueeModel.updateSymbol(symbolUpdate);
+		};
+		
+	var removeListeners = function(){
+			Ti.App.removeEventListener('app:ticker:subscribe', subscribeSymbols);
+			Ti.App.removeEventListener('app:ticker:unsubscribe', unsubscribeSymbs);
+			Ti.App.removeEventListener('app:ticker:removeWlListeners',removeListeners);
+			Ti.App.removeEventListener('app:disconnect',disconnectStreaming);
+	};	
+			
+</script>
+	<div style="padding-top:2%;">
+	<marquee scrollamount="3" id="ticker_marquee" scrolldelay="1" data-bind="foreach: marqueeSymbols"> 
+	<div class="marqueeDiv" style = 'display:inline;padding-right:3%;padding-left:5%;font-family:"Helvetica,sans-serif"' data-bind="style:{background: cellImage,color: cellColor}">
+	<span data-bind="text: symbol"></span>
+	 (<span data-bind="text: symbValue"></span>)
+	</div>
+	
+	</marquee>
+	
+	</div>
+</body>
+
+</html>

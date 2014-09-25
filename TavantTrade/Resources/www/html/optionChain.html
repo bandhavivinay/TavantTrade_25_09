@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.93, maximum-scale=0.93, minimum-scale=0.93, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<link rel = "stylesheet" media = "screen" href = "../css/optionChain.css?v=1" />
+
+
+</head>
+<body onunload="unloadfunc()">	
+	<div id="preloader">&nbsp;</div>
+<style>.row{height:46px} .row2{height:46px}</style>
+<div style="float:left;width:100%;background-color:#000000;color:#ffffff;font-weight:bold;">
+	<div style="float:left;font-size:14px;padding-left:5px;" id="symboldiv">SBIN</div>
+	<div style="float:right;font-size:12px;margin-right:5px;" id="companyname">STATE BANK OF INDIA</div>
+</div>
+<div id="slidedata" style="clear:both;display:none;color:#999"> </div>
+<input type="hidden" id="updateVal" value="1">
+<input type="hidden" id="symbolVal" value="">
+<input type="hidden" id="companyVal" value="">
+<input type="hidden" id="exchangeVal" value="">
+<input type="hidden" id="instrumentVal" value="">
+<input type="hidden" id="expireVal" value="">
+<div>
+	
+
+<div class = 'fluidHeight'>
+	<div class = 'sliderContainer'>
+	
+			<div   id="slider1" class = 'sbitSlider'  style="text-align:center;">
+				
+				<div class = 'slider'  id="expire_date_body" style="text-align:center;height:40px">
+				
+				<div class = 'item' style='float:left;text-align:center;'>	<span style='text-align:center;' >-</span></div>
+				<div class = 'item' style='float:left;text-align:center;'>	<span style='text-align:center;' >-</span></div>
+				<div class = 'item' style='float:left;text-align:center;'>	<span style='text-align:center;' >-</span></div>
+				
+			</div>
+				
+			</div>
+			
+		</div>
+		<div class = 'slideSelectors'>
+			<div id="prevSlide" class = 'prev'>&nbsp;</div>	
+			<div id="nextSlide"  class = 'next'>&nbsp;</div>
+		</div>
+
+</div>
+
+<div style="clear:both"> </div>
+<div class="mainheader">
+	<table  cellspacing="0" cellpadding="0">
+		<tr>
+			<th style="width:40%;">CALLS</th>
+			<th style="width:20%;">&nbsp;</th>
+			<th style="width:40%;">PUTS</th>
+		</tr>
+	</table>
+</div>
+
+<div style="width:100%;">
+	<div style="float:left;width:40%;font-weight:bold;color:#ffffff;text-align:center;">
+		<div class = 'fluidHeight1'>
+			<div class = 'sliderContainer' id="calldivslider">
+				<div  class = 'sbitSlider1' id="calldivslider_sbitSlider1">
+					<div   class = 'slider' id="calldivslider_slider" >
+						<div class = 'item' style="float:left" id="calldivslider_item">
+							<table   cellspacing="0" cellpadding="0">
+								<tr>	
+									<th>ASK</th>
+								</tr>
+								<tbody id="call_ask_body">
+									<tr class="row">
+									<td>-</td>
+									</tr>
+								</tbody>									
+							</table>
+						</div>
+						<div class = 'item' style="float:left">
+							<table cellspacing="0" cellpadding="0">
+								<tr >
+									<th>BID</th>
+								</tr>
+								<tbody id="call_bid_body">
+									<tr class="row" >
+										<td >-</td>
+									</tr>
+								</tbody>									
+							</table>
+						</div>
+						<div class = 'item' style="float:left" >
+							<table  cellspacing="0" cellpadding="0">
+								<tr >
+									<th>LTP</th>
+								</tr>
+								<tbody id="call_ltp_body">
+									<tr class="row">
+										<td>-</td>
+									</tr>
+								</tbody>									
+							</table>
+						</div>
+						<div class = 'item' style="float:left">
+							<table cellspacing="0" cellpadding="0">
+								<tr >
+									<th>VOL</th>
+								</tr>
+								<tbody id="call_vol_body">
+									<tr class="row" >
+										<td>-</td>
+									</tr>
+								</tbody>									
+							</table>
+						</div>
+						<div class = 'item' style="float:left">
+							<table cellspacing="0" cellpadding="0">
+								<tr >
+									<th>OI</th>
+								</tr>
+								<tbody id="call_oi_body">
+									<tr class="row" >
+										<td>-</td>
+									</tr>
+								</tbody>									
+							</table>
+						</div>												
+					</div>
+				</div>
+				<div class = 'slideSelectors'>
+					<div id="callSlide1" class = 'item selected'></div>				
+					<div id="callSlide2"  class = 'item'></div>				
+					<div id="callSlide3"  class = 'item'></div>	
+					<div id="callSlide4"  class = 'item'></div>				
+					<div id="callSlide5"  class = 'item'></div>					
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div style="float:left;width:20%;font-weight:bold;color:#ffffff;text-align:center">
+	<table  cellspacing="0" cellpadding="0" >
+		<tr><th style="background-color:#22252A" >STRIKE</th></tr>
+		<tbody id="strike_body">
+			<tr class="row2"><td>-</td></tr>
+		</tbody>									
+	</table>
+	</div>
+	<div style="float:left;width:40%;font-weight:bold;color:#ffffff;text-align:center"> 
+		<div class = 'fluidHeight2' >
+			<div class = 'sliderContainer'  id="putdivslider">
+	
+				<div  class = 'sbitSlider2' id="putdivslider_sbitSlider2">
+	
+					<div   class = 'slider'  id="putdivslider_slider" >
+						<div class = 'item'  style="float:left"  id="putdivslider_item" >
+							<table   cellspacing="0" cellpadding="0">
+								<tr ><th>ASK</th></tr>
+								<tbody id="put_ask_body">
+									
+									<tr class="row"><td>-</td></tr>
+								</tbody>									
+							</table>
+						</div>
+						<div class = 'item' style="float:left">
+							<table  cellspacing="0" cellpadding="0">
+								<tr ><th>BID</th></tr>
+								<tbody id="put_bid_body">
+									<tr class="row" ><td>-</td></tr>
+								</tbody>									
+							</table>					
+						</div>
+						<div class = 'item' style="float:left" >
+							<table cellspacing="0" cellpadding="0">
+								<tr ><th>LTP</th></tr>
+								<tbody id="put_ltp_body">
+									<tr class="row"><td>-</td></tr>
+								</tbody>									
+							</table>					
+						</div>
+						<div class = 'item' style="float:left">
+							<table  cellspacing="0" cellpadding="0">
+								<tr ><th>VOL</th></tr>
+								<tbody id="put_vol_body">
+									<tr class="row"><td>-</td></tr>
+								</tbody>									
+							</table>					
+						</div>
+						<div class = 'item' style="float:left">
+							<table  cellspacing="0" cellpadding="0">
+								<tr ><th>OI</th></tr>
+								<tbody id="put_oi_body">
+									<tr class="row"  ><td>-</td></tr>
+								</tbody>									
+							</table>					
+						</div>												
+					</div>
+				</div>
+				<div class = 'slideSelectors'>			
+					<div id="putSlide1" class = 'item selected'></div>				
+					<div id="putSlide2"  class = 'item'></div>				
+					<div id="putSlide3"  class = 'item'></div>
+					<div id="putSlide4"  class = 'item'></div>				
+					<div id="putSlide5"  class = 'item'></div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>	
+
+<script src="../js/jquery.min.jslocal"></script>
+<script src="../js/sbitslider.jslocal" ></script>
+<script src="../js/diffusion.jslocal" ></script>
+<script src="../js/optionChainDiffusion.jslocal"></script>
+
+</body>
+</html>
+
+

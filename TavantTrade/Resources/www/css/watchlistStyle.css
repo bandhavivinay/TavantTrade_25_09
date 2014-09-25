@@ -1,0 +1,82 @@
+html{
+	width:307px;
+}
+body{
+	margin:0;
+	width:307px;
+	background-color:#0E0E0E;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+table{	
+	border-collapse:collapse;
+	font-family:Arial,Helvetica,sans-serif;	
+	/*width:307px;*/
+}
+
+thead{
+	background-color:#C0C0C0;
+}
+
+
+tr{
+	border-color:#252525;
+	width:100%;
+}
+
+td{
+	width:58px;
+	border-left:none;
+	border-right:none;
+}
+
+.last{
+	width:52px;
+}
+.arrowCol{
+	width:10px;
+}
+.hiddenRow{
+	display:none;
+}
+
+.mainRow td {	
+	height:50px;	
+	line-height:180%;
+	-webkit-user-select:none;
+	-webkit-touch-callout:none;	
+}
+
+.mrCell {
+	font-weight:bold;
+	width:15px;
+	color:#4169E1;
+	/*background: url("../../images/red_sq.png") repeat-y left;*/
+	/*background-color:#FFFF00;*/
+	padding-left:8px;
+}
+.green{
+	color:green;
+}
+.red{
+	color:red;
+}
+
+.first{
+	clear:both;	
+	font-size:80%;
+}
+
+.mrCell .first{	
+	font-size:100%;
+}
+
+.second{	
+	font-size:70%;
+}
+
+.mrCell .second{	
+	font-size:70%;
+}

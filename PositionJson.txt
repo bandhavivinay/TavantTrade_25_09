@@ -1,0 +1,5 @@
+[{"symbolName":"AXISBANK-EQ","ltp":"389.45","averageCost":"225.55","quantity":"15","profitPercentage":"25.98%","profitAmount":"97.25","type":"Delivery"},
+{"symbolName":"MOTOGENFIN-BE","ltp":"656.05","averageCost":"425.40","quantity":"10","profitPercentage":"32.98%","profitAmount":"197.95","type":"Delivery"},
+{"symbolName":"TATACHEM-IL","ltp":"189.40","averageCost":"215.50","quantity":"5","profitPercentage":"29.94%","profitAmount":"90.26","type":"Delivery"},
+{"symbolName":"AMBUJACEM-EQ","ltp":"332.48","averageCost":"321.59","quantity":"9","profitPercentage":"22.88%","profitAmount":"107.09","type":"Delivery"},
+{"symbolName":"ACC-EQ","ltp":"239.45","averageCost":"118.55","quantity":"11","profitPercentage":"20.50%","profitAmount":"138.25","type":"Intraday"}]

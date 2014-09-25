@@ -1,0 +1,66 @@
+/**
+ * @author Tavant
+ */
+var diffusionconnectedCallback=null;
+
+function onLostFunction(){
+	Ti.API.info('connectionLost');
+}
+function onConnectionReject(){
+	Ti.API.info('connection rejected');
+}
+
+var connectionDetails = {
+			debug : false,
+			// XHRURL : "http://" + "192.168.140.70:8085",
+			XHRURL : "http://" + "121.240.130.119:80",
+			onDataFunction : onDataEvent,
+			onCallbackFunction : onCallbackEvent,
+			disableWS : true,
+			disableFlash : true,
+			disableSilverlight : true,
+			disableXHR : false,			
+			onLostConnectionFunction : onLostFunction,
+			onConnectionRejectFunction : onConnectionReject,
+			XHRretryCount:1,
+			};
+
+var credentials = {
+			username : "TEST",
+			password : ""
+};
+	
+function onDataEvent(webClientMessage){
+	Ti.API.info("data"+webClientMessage); 	
+};
+ 
+function onCallbackEvent(isConnected){
+	Ti.API.info("Diffusion Connected status"+isConnected);
+	diffusionconnectedCallback(isConnected);
+};
+
+function connectDiffusion(_callback){
+	diffusionconnectedCallback=_callback;
+	if (DiffusionClient.isConnected()) {
+		Ti.API.info("diffusin already connected");
+		diffusionconnectedCallback(true);
+		return;	
+  	}
+  	DiffusionClient.connect(connectionDetails,credentials);
+};
+
+function disconnectDiffusion(){
+	DiffusionClient.close();
+};
+function subscribe(symbol) {
+	Ti.API.info("symbol "+symbol);
+	DiffusionClient.subscribe(symbol);
+};
+function fetch(symbol) {
+	Ti.API.info("fetching symbol not subscribing "+symbol);
+	DiffusionClient.fetch(symbol);
+};
+function unsubscribe(symbol) {
+	DiffusionClient.unsubscribe(symbol);
+};
+	

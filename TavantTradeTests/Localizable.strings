@@ -1,0 +1,222 @@
+/* 
+  Localised.strings
+  TavantTrade
+
+  Created by Gautham S Shetty on 03/01/14.
+  Copyright (c) 2014 Tavant. All rights reserved.
+*/
+
+"Chart_Button_Title"="Chart";
+"Quote_Button_Title"="Quotes";
+"Position_Heading"="Positions";
+"DashBoard_Heading"="DashBoard";
+"Views_Heading"="Views";
+"Add_To_WatchList"="Add to Watchlist";
+
+//Common ...
+
+"Cancel_Button_Title"="Cancel";
+"Done_Button_Title"="Done";
+
+//Order Screen Localizable String ...
+"Order_Title"="Orders";
+"Exchange_Title"="Exchange";
+"Order_Duration"="Order Duration";
+"Order_Price"="Order Price";
+"Disclosed_Qty"="Disclosed Qty";
+"Product_Type"="Product Type";
+"Price_Type"="Price Type";
+"Confirm_Time"="Confirm Time";
+"Status_Title"="Status";
+"Type_Title"="Type";
+"Qty_Title"="Qty";
+
+"All_Order"="All";
+"Executed_Order"="Executed";
+"Open_Order"="Open";
+
+//Menu Items Localizable String ...
+"Widget_Menu"="Widgets";
+"Watchlist_Menu"="Watchlist";
+"News_Menu"="News";
+"Accounts_Menu"="Account";
+"Settings_Menu"="Settings";
+
+//Symbol Search Localizable String ...
+"Symbol_Search_Title"="Search Symbol";
+
+//localization for trade widget screen
+"Trade_Title"="Trade";
+"Ask"="Offer";
+"Bid"="Bid";
+"High"="High";
+"Low"="Low";
+"Account_Number"="Account Number";
+"Order_Ticket"="Order Ticket";
+//localization for trade enlarged screen
+
+"Qty"="Quantity";
+"Dis_Qty"="Disclosed Quantity";
+"Trigger_Price"="Trigger Price";
+"Price"="Price";
+
+//localization for trade preview screen
+"Last"="Last";
+"Change"="Change";
+"Volume"="Volume";
+"Order_Type"="Order Type";
+"Validity"="Validity";
+"Trade_Preview"="Trade Preview";
+"Confirm_Button_Title"="Confirm";
+"Back_Button_Title"="Back";
+
+"Confirmation_Title"="Confirmation";
+"TradeStatus_Title"=" Trade status";
+
+// Utility screen labels localized
+"Nse_Exchange"="NSE";
+"Bse_Exchange"="BSE";
+"Equity"="EQUITY";
+"Future_Currency"="FUTURE CURRENCY";
+"Future_Index"="FUTURE INDEX";
+"Future_Stock"="FUTURE STOCK";
+"Option_Currency"="OPTION CURRENCY";
+"Option_Index"="OPTION INDEX";
+"Option_Stock"="OPTION STOCK";
+"Hourly_Gainers"="Hourly Gainers";
+"Hourly_Losers"="Hourly Losers";
+"Top_Gainers"="Top Gainers";
+"Top_Losers"="Top Losers";
+"Volume_Toppers"="Volume Toppers";
+"Volume_Shockers"="Volume Shockers";
+"Price_Shockers"="Price Shockers";
+"Most_Actives"="Most Actives";
+"Future_Currency_Url"="FUTCUR";
+"Future_Index_Url"="FUTIDX";
+"Future_Stock_Url"="FUTSTK";
+"Option_Currency_Url"="OPTCUR";
+"Option_Index_Url"="OPTIDX";
+"Option_Stock_Url"="OPTSTK";
+"Buy_Type"="Buy";
+"Sell_Type"="Sell";
+"Hourly_Gainers_Url"="hourlygl";
+"Top_Gainers_Url"="gainerloser";
+"Volume_Toppers_Url"="topper";
+"Volume_Shockers_Url"="volumeshocker";
+"Price_Shockers_Url"="priceshocker";
+"Most_Actives_Url"="active";
+"Market_Order_Title"="Market";
+"Limit_Order_Title"="Limit";
+"SLL_Order_Title"="SL-L";
+"SLM_Order_Title"="SL-M";
+"Intraday_Prod_Type"="IntraDay";
+"Delivery_Prod_Type"="Delivery";
+"Dur_Day"="Day";
+"Dur_Ioc"="IOC";
+"Cash_Limit"="Cash";
+"Client_Limit"="Client";
+"Fo_Limit"="FO";
+"Cur_Limit"="CUR";
+
+//Watchlist Screen Localizable String ...
+"Watchlist_Entry"="Watchlist";
+"Add_Symbol"="Add Symbol";
+"Create_WatchList"="Create Watchlist";
+"Add_Symbols"="Add Symbols";
+"Create_WatchList"="Create WatchList";
+"Edit_WatchList"="Edit WatchList";
+
+//Watchlist Symbol Screen Localizable String ...
+"Last_Trade"="Last Trade";
+"Day_Range"="Day Range";
+"FiftyTwoWeek_Range"="52 Week Range";
+
+//Alert Messages ...
+"Network_Error"="Network Error";
+"Watchlist_Edit"="Watchlist edited successfully";
+"Watchlist_Create"="Watchlist created successfully";
+"Symbol_Exists"="Symbol already exists in the Watchlist";
+"Expiry_Date_Selection"="Please select Expiry Date for the symbol";
+"ExpiryDate_OptionType_Alert"="Please select both Expiry Date and Option Type";
+"Missing_Symbol_Details"="Please select all the details for the symbol";
+"No_Result"="No result found";
+"Missing_Keyword"="Please enter a keyword to perform search";
+"Login_Failed"="Login failed";
+"Missing_Credentials"="Please Enter the credentials";
+"Trade_Confirm"="Would you like to confirm the trade?";
+"Order_Failure"="Order is not placed successfully";
+"Order_Success"="Order placed successfully";
+"Order_Modify_Success"="Order modified successfully";
+"SystemWatchlist_Edit"="System watchlists can't be edited";
+"Symbol_Already_Present"="Symbol already exists in the watchlist";
+"Symbol_Added_Success"="Symbol successfully added to the selected watchlist";
+"Request_Failure"="Unable to proceed with the request";
+"Delete_Failure"="Unable to delete the selected watchlist";
+
+//Market Screen localizable String...
+"Nifty_Title"="NIFTY";
+"Sensex_Title"="SENSEX";
+"USD_INR_Title"="USD/INR";
+
+"NSE_Subscription_Key"="MARKET/NSE/STATUS";
+"BSE_Subscription_Key"="MARKET/BSE/STATUS";
+"CD_Subscription_Key"="MARKET/CD/STATUS";
+
+"Percentage_Change"="% Change";
+"Company_Title"="Company";
+"LTP_Title"="LTP";
+
+"Market_Detail"="Market Details";
+
+"NSE_KEY"="NSE/NIFTY";
+"BSE_KEY"="BSE/BSE_SENSEX";
+
+// Account Screen localization
+"Account_Title"="Accounts";
+"Account_Id"="Account ID";
+"Account_Limit"="Limit";
+"Ledger_Balance"="Ledger Balance";
+"Liened_Amount"="Liened Amount Today";
+"Ipo_Amount"="IPO Amount";
+"Mututal_Fund"="Mutual Fund Amount";
+"Collatral_Amount"="Collateral";
+"Funds_From_Sales"="Funds from sales proceeds";
+"Realised_gain"="Realised Gains";
+"Addition_Margin"="Addition Adhoc Margin";
+"Adhoc_Margin"="Adhoc_Margin";
+"National_Cash"="National Cash";
+"Direct_Collateral"="Direct Collateral";
+"MTM_Loss"="MTM Loss on Positions";
+"Amount_Unleaned"="Amount Unleaned Today";
+"Total_Margin_Used"="Margin used for orders and trades";
+"Margin_Used"="Margin_Used";
+"Unrealised_Loss"="Unrealized MTM Loss";
+"MTM_Gain"="Realized MTM Gain";
+"Cnc_Sales"="Cnc Sales";
+"Dp_Lien"="DP Lien";
+"Fund_Lien"="Fund Lien";
+
+
+//Position Screen Localizable String ...
+"Position_Total"="Total Profit/Loss";
+"Symbol_Title"="Symbol";
+"Average_Cost"="Average Cost";
+"Profit_Percentage"="Profit(%)";
+
+
+//Views Screen Localizable String ...
+"Source_Heading"="Source";
+"Target_Heading"="Target";
+"Hold_Type"="Hold";
+
+//Messages screen
+
+"Message_Title"="Admin Messages";
+
+//Settings Screen
+
+"Settings_Heading"="Settings";
+
+//Widgets Settings
+
+"Widgets_Settings_Heading"="Widgets Settings";

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TTMenuViewController">
+            <connections>
+                <outlet property="menuOptionsTableView" destination="TPl-pj-Z5n" id="Tis-ii-kbv"/>
+                <outlet property="view" destination="cfu-2h-o3q" id="CZ2-YK-Vrc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="cfu-2h-o3q">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="768"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TPl-pj-Z5n">
+                    <rect key="frame" x="0.0" y="20" width="200" height="748"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="0.054901960780000002" green="0.054901960780000002" blue="0.062745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <view key="tableHeaderView" contentMode="scaleToFill" id="59f-hp-qIc">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awA-FX-ulv">
+                                <rect key="frame" x="20" y="12" width="91" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <color key="textColor" red="0.70588235294117641" green="0.74509803921568629" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.11372549019607843" green="0.11764705882352941" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Huf-0K-jrc"/>
+                        <outlet property="delegate" destination="-1" id="kG8-E3-14p"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TEv-Jv-pqY" userLabel="border line">
+                    <rect key="frame" x="199" y="20" width="1" height="748"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.28235294119999998" green="0.29803921570000003" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.19607843137254902" green="0.20784313725490194" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="TPl-pj-Z5n" firstAttribute="top" secondItem="cfu-2h-o3q" secondAttribute="top" constant="20" id="0hd-35-fH2"/>
+                <constraint firstItem="TEv-Jv-pqY" firstAttribute="leading" secondItem="TPl-pj-Z5n" secondAttribute="leading" constant="199" id="2He-iw-YDU"/>
+                <constraint firstAttribute="trailing" secondItem="TEv-Jv-pqY" secondAttribute="trailing" id="FqZ-7g-8T3"/>
+                <constraint firstItem="TPl-pj-Z5n" firstAttribute="leading" secondItem="cfu-2h-o3q" secondAttribute="leading" id="a3k-wZ-alp"/>
+                <constraint firstItem="TEv-Jv-pqY" firstAttribute="top" secondItem="cfu-2h-o3q" secondAttribute="top" constant="20" id="fUa-qr-XOO"/>
+                <constraint firstAttribute="trailing" secondItem="TPl-pj-Z5n" secondAttribute="trailing" id="iqc-ZD-AZT"/>
+                <constraint firstAttribute="bottom" secondItem="TPl-pj-Z5n" secondAttribute="bottom" id="nSM-Uq-ZgL"/>
+                <constraint firstAttribute="bottom" secondItem="TEv-Jv-pqY" secondAttribute="bottom" id="zvU-RU-Fa3"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+        </view>
+    </objects>
+</document>

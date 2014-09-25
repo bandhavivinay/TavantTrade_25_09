@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Watchlist</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.93, maximum-scale=0.93, minimum-scale=0.93, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<link rel="stylesheet" type="text/css" href="../css/watchlistStyle3.css"/>
+
+<!-- <script src="http://192.168.147.197/knockout-2.1.0.js" defer="defer"></script> -->
+<script src="../js/knockout-2.2.0.jslocal" defer="defer"></script>
+<script src="../js/watchlistcellNew.jslocal" defer="defer"></script>
+<script src="../js/diffusion.jslocal"></script>
+<script src="../js/DiffusionKnockoutWrapper.jslocal"></script>
+
+
+
+</head>
+<body onload="activateListeners()">
+<script>
+var symbKeys=null;
+var koInitialized = false;
+var watchlistModel=null;
+var shouldtream='YES';
+function activateListeners(){
+	
+	watchlistModel = new WatchlistViewModel();
+	ko.applyBindings(watchlistModel);
+	
+	connectionDetails.onDataFunction =  onSymbolDataUpdate;	
+	
+	Ti.App.addEventListener('app:subscribe',subscribeSymbols);
+	Ti.App.addEventListener('app:unsubscribe',unsubscribeSymbs);
+	Ti.App.addEventListener('app:removeWlListeners', removeListeners);
+	Ti.App.fireEvent('app:intialload',{});
+	Ti.App.addEventListener('app:disconnect',disconnectStreaming);
+	marqueeIfLongText();	
+}
+function marqueeIfLongText(){
+	symbolElements = document.getElementsByClassName("wlCellTD1_symbolName_marquee");
+	companyElements = document.getElementsByClassName("wlCellTD1_companyName");
+	//console.log(symbolElements.length);
+	for(var i=0;i<symbolElements.length;i++){
+		// console.log(symbolElements[i]);
+		// console.log(symbolElements[i].innerHTML.length);
+		if(symbolElements[i].innerHTML.length > 6){
+			// console.log("EAH");
+			symbolElements[i].setAttribute("scrollamount",1);
+		}else{	
+			symbolElements[i].setAttribute("scrollamount",0);
+			symbolElements[i].setAttribute('direction','right');
+		}
+	}
+	for(var i=0;i<companyElements.length;i++){
+		//console.log(elements[i]);
+		//console.log(elements[i].innerHTML.length);
+		if(companyElements[i].innerHTML.length > 20){
+			companyElements[i].setAttribute("scrollamount",1.5);
+		}else{	
+			companyElements[i].setAttribute("scrollamount",0);
+			companyElements[i].setAttribute('direction','right');
+		}
+	}
+}
+var subscribeSymbols = function(e){ //subcribes symbols to knockout and diffusion
+		
+		Ti.API.debug('SYMBOLS WILL BE SUBSCRIBED HERE');
+		//Ti.API.debug(JSON.stringify(e.symbolData.value));
+		 symbKeys = e.symbolData.value;
+		 Ti.API.info('these are the subkeys'+symbKeys);
+		 shouldtream=e.symbolData.shouldStream;
+		 var clientId = e.symbolData.clientId;
+		 credentials.username = clientId;
+		 if(watchlistModel.getLength()>0){
+			watchlistModel.removeAllSymbols();
+		}
+		watchlistModel.mapNewKeys(symbKeys);
+		
+		if(shouldtream==='YES'||shouldtream==='NO'){
+				  Ti.API.error("Checking diffusion is connected"+shouldtream);
+				if(DiffusionClient.isConnected()){
+					Ti.API.error("Diffusion is connected");
+			        subscribeNow(symbKeys);
+			        Ti.App.fireEvent('app:closeindicator',{});
+		        }else{
+		        	Ti.API.error("connect to diffusion");
+		        	connectDiffusion(connectCallback);
+		        }
+			}else {
+				Ti.App.fireEvent('app:closeindicator',{});
+		    }	
+		
+		
+		
+		
+		
+		/*
+		if(DiffusionClient.isConnected()){
+			Ti.API.debug('Diffusion is connected here ******************, can subscribe');
+			subscribeNow(symbKeys);
+		}else
+		{
+			Ti.API.debug('Diffusion is not connected here ******************,reconnect');
+			if(shouldtream==='YES'){
+			connectDiffusion(connectCallback);
+			}
+			else
+			{
+				Ti.App.fireEvent('app:closeindicator',{});
+			}
+		}
+		*/
+};
+
+function connectCallback(_status){
+	Ti.API.debug('connectCallback called'+_status);
+	Ti.App.fireEvent('app:closeindicator',{});
+	if(_status)
+	{
+		subscribeNow(symbKeys);
+	}
+}
+
+function disconnectStreaming(){
+	disconnectDiffusion();
+}
+
+var unsubscribeSymbs = function(e){ //unsubcribes symbols from knockout and diffusion
+		watchlistModel.removeAllSymbols();
+		//Ti.API.debug('66666666666666666666666666666666');	
+		unsubSymbols(symbKeys);
+};
+
+
+function subscribeNow(symbolsKeys){
+		if(DiffusionClient.isConnected()){
+		for(var i = 0; i < symbolsKeys.length ;i++){
+			Ti.API.debug("going to subscribe key"+symbolsKeys[i].subscriptionKey);
+			if(shouldtream==='NO'){
+						fetch('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);
+					}else{
+					subscribe('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);	
+					}	
+		}
+		}
+  };
+  
+var unsubSymbols = function(symbolsKeys){
+		Ti.API.debug('Unsubscribing Symbols');
+		for(var i = 0; i < symbolsKeys.length ;i++){
+			unsubscribe('SYMBOLS/QUOTES/' + symbolsKeys[i].subscriptionKey);	
+		}
+	};  
+  
+
+var onSymbolDataUpdate = function(webClientMessage){	
+	// Ti.API.error("I am getting fetch values"+JSON.stringify(webClientMessage))	;
+		var symbolUpdate = [];
+		symbolUpdate.push((webClientMessage.topic).replace('SYMBOLS/QUOTES/',''));
+		symbolUpdate.push(webClientMessage.records[0].fields[13]); //last price
+		symbolUpdate.push(webClientMessage.records[0].fields[16]); //vol value
+		symbolUpdate.push(webClientMessage.records[0].fields[6]); // +/- indicator value
+		symbolUpdate.push(webClientMessage.records[0].fields[7]); //change difference value
+		symbolUpdate.push(webClientMessage.records[0].fields[10]); //bid value
+		symbolUpdate.push(webClientMessage.records[0].fields[12]); //ask value
+		symbolUpdate.push(webClientMessage.records[0].fields[2]); //High value
+		symbolUpdate.push(webClientMessage.records[0].fields[3]); //Low value
+		symbolUpdate.push(webClientMessage.records[0].fields[0]); //Timestamp value
+		watchlistModel.updateSymbol(symbolUpdate);
+	};
+	
+var removeListeners = function(){
+		Ti.App.removeEventListener('app:subscribe', subscribeSymbs);
+		Ti.App.removeEventListener('app:unsubscribe', unsubscribeSymbs);
+		Ti.App.removeEventListener('app:removeWlListeners',removeListeners);
+		Ti.App.removeEventListener('app:disconnect',disconnectStreaming);
+};	
+
+
+// KNOCKOUT MODEL CODE
+	
+	
+</script>
+
+	
+	
+	
+<table border=1 style="width:100%;">	
+    <tbody data-bind="foreach: symbols">
+        <tr class="mainRow" style="border-bottom:solid 1px grey;margin-right:5px;">
+			<td class="hiddenRow">
+				<div data-bind= "text: idNo"></div>
+				<div data-bind= "text: subscriptionKey"></div>
+				<div data-bind="text: symbol"></div>
+				<div data-bind= "text: companyName"></div>
+				<div data-bind= "text: instrumentType"></div>
+				<div data-bind= "text: exchange"></div>
+			</td>
+        	<td class="wlCellTD1" style="padding-bottom: 5px;">
+        		   		
+        	<div style="float:left;width:100%;height:auto;" >
+							<div style="float:left;width:50%;word-break: break-all; word-wrap: break-word;height:auto;font-size:1em">
+								<div  class="wlCellTD1_symbolName1" data-bind="text: symbol"  onclick="goToTrade(((this.parentNode).parentNode).parentNode)"></div>
+							</div>
+							<div style="float:right;vertical-align:middle;width:50%;height:auto">
+													
+								<div class="wlCellTD1_companyName" data-bind="text: compNameNupdateTime" style="color:#2A86E3;margin-left:5px;width:75%;font-size: 0.9em;float:left;text-align:center;vertical-align:middle;padding-top:5px;font-weight:normal;height:auto;word-break: break-all; word-wrap: break-word;"></div>
+								<div class="wlCellTD1_companyName" style="width:5%;float:left;text-align:justify;vertical-align:middle;padding-top:5px;font-weight:normal;height:auto;">&nbsp;</div>
+								<div class="wlCellTD1_companyName" data-bind="text: vol" style="width:12.5%;font-size: 0.9em;float:left;text-align:justify;vertical-align:middle;padding-top:5px;font-weight:normal;height:auto;word-break: break-all; word-wrap: break-word;"></div>
+								 
+								
+							</div>
+							
+						</div>	
+						
+						<div style="clear:both"></div>
+						<div style="float:left;width:100%;height:30px;">
+							<div style="float:left;height:30px;">
+								<div class="wlCellTD1_LTPBlock_ii" >
+								<div class ="wlCellTD1_LTPBlock_ltp" data-bind="text: last,style:{color: updateLastColor}"></div>
+								<div class="wlCellTD1_LTPBlock_separator"><img src="../../images/wl_divider.png"/></div>
+								<div class="wlCellTD1_LTPBlock_changeBlock_change" data-bind="text: change,style:{color: updateChangeColor}"></div>
+								<div class="wlCellTD1_LTPBlock_separator"><img src="../../images/wl_divider.png"/></div>
+								<div class="wlCellTD1_LTPBlock_changeBlock_changePer" data-bind="text: changePer,style:{color: updateChangeColor}"></div>
+																
+								</div>	
+							</div>
+							<div style="float:right;height:30px;vertical-align:middle;">
+								<div class="wlCellTD2_block1">
+								<div class="wlCellTD2_block1_col1">
+								<div class="wlCellTD2_block1_col1_row1">
+								<div class="wlCellTD2_block1_col1_row1_bid_label">Bid</div>
+								<div class="wlCellTD2_block1_col1_row1_bid_value" data-bind="text: bid"></div>
+								</div>
+								<div class="wlCellTD2_block1_col1_row2">
+								<div class="wlCellTD2_block1_col1_row2_ask_label">Ask</div>
+								<div class="wlCellTD2_block1_col1_row2_ask_value" data-bind="text: ask"></div>
+								</div>
+								</div>
+								<div class="wlCellTD2_block1_col2">
+								<div class="wlCellTD2_block1_col2_separator"><img src="../../images/wl_divider.png"/></div>
+								</div>
+								<div class="wlCellTD2_block1_col3" >
+								<div class="wlCellTD2_block1_col3_row1">
+								<div class="wlCellTD2_block1_col3_row1_high_label">High</div>
+								<div class="wlCellTD2_block1_col3_row1_high_value"  data-bind="text: high"></div>
+								</div>
+								<div class="wlCellTD2_block1_col3_row2">
+								<div class="wlCellTD2_block1_col3_row2_low_label">Low</div>
+								<div class="wlCellTD2_block1_col3_row2_low_value"  data-bind="text: low"></div>
+								</div>
+								</div>
+								</div>
+							</div>
+							
+						</div>	
+									
+				
+			</td>
+			<td style="width:2px;background-color:#424449;"onclick="goToQuote(this)">
+						<img class="wlCellTD3_arrow" src="../../images/arrow.png"/>
+			</td>
+        </tr>
+        
+			
+			
+			
+			
+				<!-- 
+			<td class="wlCellTD1">
+				<div class="wlCellTD1_block1">
+					<div class="wlCellTD1_symbolName" onclick="goToTrade((this.parentNode).parentNode)">
+						<marquee class="wlCellTD1_symbolName_marquee" scrollamount="0" direction="left" behavior="scroll" data-bind="text: symbol"></marquee>
+					</div>
+					
+					<div class="wlCellTD1_LTPBlock"  onclick="goToQuote((this.parentNode).parentNode)">
+						<div class ="wlCellTD1_LTPBlock_ltp" data-bind="text: last,style:{color: updateLastColor}"></div>
+						<div class ="wlCellTD1_LTPBlock_changeBlock">
+							<div class="wlCellTD1_LTPBlock_changeBlock_change" data-bind="text: change,style:{color: updateChangeColor}"></div>
+							<div class="wlCellTD1_LTPBlock_changeBlock_changePer" data-bind="text: changePer,style:{color: updateChangeColor}"></div>
+						</div>	
+					</div>
+				</div>
+				<div  class="wlCellTD1_block2"  onclick="goToQuote(this.parentNode)">	
+					<div class="wlCellTD1_vol" data-bind="text: vol"></div>
+				</div>
+				<div  class="wlCellTD1_block3" onclick="goToQuote(this.parentNode)">
+					<div>
+						<marquee scrollamount="0" class="wlCellTD1_companyName" direction="left" behavior="scroll" data-bind="text: companyName"></marquee>
+					</div>
+					
+				</div>
+			</td>	
+			<td class="wlCellTD2" onclick="goToQuote(this)">
+				<div class="wlCellTD2_block1">
+					<div class="wlCellTD2_block1_col1">
+						<div class="wlCellTD2_block1_col1_row1">
+							<div class="wlCellTD2_block1_col1_row1_bid_label">Bid</div>
+							<div class="wlCellTD2_block1_col1_row1_bid_value" data-bind="text: bid"></div>
+						</div>
+						<div class="wlCellTD2_block1_col1_row2">
+							<div class="wlCellTD2_block1_col1_row2_ask_label">Ask</div>
+							<div class="wlCellTD2_block1_col1_row2_ask_value" data-bind="text: ask"></div>
+						</div>
+					</div>
+					<div class="wlCellTD2_block1_col2">
+						<div class="wlCellTD2_block1_col2_separator"><img src="../../images/wl_divider.png"/></div>
+					</div>
+					<div class="wlCellTD2_block1_col3">
+						<div class="wlCellTD2_block1_col3_row1">
+							<div class="wlCellTD2_block1_col3_row1_high_label">High</div>
+							<div class="wlCellTD2_block1_col3_row1_high_value"  data-bind="text: high"></div>
+						</div>
+						<div class="wlCellTD2_block1_col3_row2">
+							<div class="wlCellTD2_block1_col3_row2_low_label">Low</div>
+							<div class="wlCellTD2_block1_col3_row2_low_value"  data-bind="text: low"></div>
+						</div>
+					</div>
+				</div>
+				<div class="wlCellTD2_block2">
+					<div class="wlCellTD2_block2_date" data-bind="text: updateTime"></div>
+				</div>
+			</td>
+			<td class="wlCellTD3" onclick="goToQuote(this)">
+				<img class="wlCellTD3_arrow" src="../../images/wl_arrow.png"/>
+			</td> -->
+			
+			<!-- ------------------------ -->
+			
+			<!-- 
+			
+			<td class='wlCellTD1' data-bind="style:{background: updateCellBg}">
+				<div class="wlCellTD1_symbolName"data-bind="text: symbol" onclick="goToQuote(this.parentNode)"></div>				
+				<div class="wlCellTD1_LTPBlock">
+					<div class="wlCellTD1_LTPBlock_last" data-bind="text: last" onclick="goToTrade(this.parentNode)"></div>
+					<div class="wlCellTD1_LTPBlock_change" data-bind="text: change" onclick="goToTrade(this.parentNode)"></div>
+					<div class="wlCellTD1_LTPBlock_changePer" data-bind="text: changePer" onclick="goToTrade(this.parentNode)"></div>
+				</div>				
+				
+				<div class = "wlCellTD1_volume" data-bind="text: vol" onclick="goToTrade(this.parentNode)"></div>
+				<div class = "wlCellTD1_companyName" data-bind="text: companyName" onclick="goToTrade(this.parentNode)"></div>
+			</td>
+			<td style="width:153px,background-color:#FFFFFF">
+				
+			</td> -->
+			
+			<!-- //////////////////////// -->
+			
+			
+			<!--
+			<td class="mrCell" data-bind="style:{background: updateCellBg}" onclick="goToQuote(this)">
+				<div class="first" data-bind="text: symbol"></div>
+				
+			</td>
+			<td onclick="goToTrade(this)">
+				<div class="first" data-bind="text: last,style:{color: updateLastColor}"></div>
+				<div class="second" data-bind="text: vol,style:{color: updateChangeColor}"></div>
+			</td>
+			<td  onclick="goToTrade(this)">
+				<div class="first green" data-bind="text: change"></div>
+			<div class="second red" data-bind="text: changePer,style:{color: updateLastColor}"></div>
+			</td>
+			<td class="last"  onclick="goToTrade(this)">
+				<div class="first green" data-bind="text: bid"></div>
+				<div class="second red" data-bind="text: ask"></div>
+			</td>
+			<td class="arrowCol"  onclick="goToTrade(this)">
+				<img src="../../images/arrow.png"/>
+			</td>
+			-->	
+			
+    </tbody>
+</table>
+</body>
+</html>

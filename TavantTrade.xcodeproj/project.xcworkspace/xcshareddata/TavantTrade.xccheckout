@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D1BE02F6-853F-43C4-98B1-59FDF189BD5F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TavantTrade</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4D856A2D-0C25-44B3-8B79-03911FA64B2B</key>
+		<string>http://svn.corp.tavant.com/svnproj/mobiledev/trunk</string>
+		<key>60b4de50-cc8f-0410-8377-bcc75f08c950++505</key>
+		<string>http://bandhavi.vinay@svn.corp.tavant.com/svnproj/mobiledev/trunk</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/SBITavantTrade/TavantTrade_iOS/TavantTrade_iPad/TavantTrade_iPad/TavantTrade.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4D856A2D-0C25-44B3-8B79-03911FA64B2B</key>
+		<string>../../../../../../../../TavantTrade_iOS</string>
+		<key>60b4de50-cc8f-0410-8377-bcc75f08c950++505</key>
+		<string>../../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>4D856A2D-0C25-44B3-8B79-03911FA64B2B</key>
+		<string>http://svn.corp.tavant.com/svnproj/mobiledev</string>
+		<key>60b4de50-cc8f-0410-8377-bcc75f08c950++505</key>
+		<string>http://bandhavi.vinay@svn.corp.tavant.com/svnproj/mobiledev</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://bandhavi.vinay@svn.corp.tavant.com/svnproj/mobiledev/trunk/ios/SBITavantTrade/TavantTrade_iOS/TavantTrade_iPad/TavantTrade_iPad/TavantTrade.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>60b4de50-cc8f-0410-8377-bcc75f08c950++505</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>60b4de50-cc8f-0410-8377-bcc75f08c950++505</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TavantTrade_12_Sept</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>branches</string>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>trunk</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4D856A2D-0C25-44B3-8B79-03911FA64B2B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TavantTrade_iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>

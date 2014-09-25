@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="HighChartWrapper.js"></script>
+<script>
+	var loadNewChart = function(e){
+		Ti.API.debug('LANDSCAPE: Loading the HIGHSTOCK CHART of type: ' + e.chartType+' for the symbol named: ' +e.symbol + 'and company named ' + e.name);
+		addChart(e.chartType,e.symbol,e.name,e.size,e.duration,true,e.freq);		
+	};	
+	
+	Ti.App.addEventListener('loadLandscapeChartForSymbol',loadNewChart);	
+			
+	var loadedChart = function(){
+		Ti.App.fireEvent('loadedChart',{});
+	};
+	var errorMessage =  function(){
+		Ti.App.fireEvent('noDataForSymbol',{});
+		Ti.App.fireEvent('clearPortraitChart',{});
+		Ti.App.fireEvent('clearLandscapeChart',{});
+	};
+	// var hitWhenLoaded = function (){
+		// Ti.API.debug("loaded Webview");
+		// Ti.App.fireEvent('webViewReady',{});
+	// };
+	var clearCharts = function(){
+		var chartDiv = document.getElementById('container');
+		chartDiv.innerHTML = '';
+	};
+	Ti.App.addEventListener('clearLandscapeChart',clearCharts);
+	
+	var unloadListeners =  function(){		
+		Ti.App.removeEventListener('loadLandscapeChartForSymbol',loadNewChart);
+		Ti.App.removeEventListener('clearLandscapeChart',clearCharts);
+	};
+</script>
+<title>Chart WebView</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+
+<link rel="stylesheet" type="text/css" href="../css/chart.css" />
+</head>
+<body onunload="unloadListeners();">
+<div id="container"></div>
+</body>
+</html>

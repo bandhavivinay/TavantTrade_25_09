@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="fxq-Az-ESQ" customClass="TTAccountLienCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="77"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fxq-Az-ESQ" id="mkX-6z-Sgt">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liened Amount Today" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Zy-85-oIA">
+                        <rect key="frame" x="14" y="11" width="194" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="194" id="xUD-rt-aEz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.20784313725490194" green="0.44313725490196076" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0x-43-dNo">
+                        <rect key="frame" x="255" y="12" width="56" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vd0-oM-2nt">
+                        <rect key="frame" x="20" y="40" width="130" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.0078431372549019607" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="Fund Lien">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="showfundLien:" destination="fxq-Az-ESQ" eventType="touchUpInside" id="UuW-U9-by5"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Fc-oa-0Nl">
+                        <rect key="frame" x="170" y="40" width="130" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.43056571370000002" blue="0.89654416449999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="cax-2w-zd1"/>
+                        </constraints>
+                        <state key="normal" title="Dp Lien">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="showdpLien:" destination="fxq-Az-ESQ" eventType="touchUpInside" id="kUM-uq-aci"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="l0x-43-dNo" firstAttribute="top" secondItem="mkX-6z-Sgt" secondAttribute="top" constant="12" id="0W3-1Q-qQb"/>
+                    <constraint firstAttribute="trailing" secondItem="l0x-43-dNo" secondAttribute="trailing" constant="9" id="0gH-Wb-WCU"/>
+                    <constraint firstItem="Vd0-oM-2nt" firstAttribute="width" secondItem="2Fc-oa-0Nl" secondAttribute="width" id="41d-vC-LNd"/>
+                    <constraint firstItem="Vd0-oM-2nt" firstAttribute="leading" secondItem="mkX-6z-Sgt" secondAttribute="leading" constant="20" id="GRf-lL-AJu"/>
+                    <constraint firstItem="2Fc-oa-0Nl" firstAttribute="top" secondItem="Vd0-oM-2nt" secondAttribute="top" id="KKf-PN-C0W"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="l0x-43-dNo" secondAttribute="trailing" constant="3" id="LDK-qW-510"/>
+                    <constraint firstItem="2Fc-oa-0Nl" firstAttribute="leading" secondItem="Vd0-oM-2nt" secondAttribute="trailing" constant="20" id="NOF-oF-jnE"/>
+                    <constraint firstItem="5Zy-85-oIA" firstAttribute="leading" secondItem="mkX-6z-Sgt" secondAttribute="leading" constant="14" id="VcC-6j-0jf"/>
+                    <constraint firstItem="2Fc-oa-0Nl" firstAttribute="bottom" secondItem="Vd0-oM-2nt" secondAttribute="bottom" id="Zqc-m6-Ti1"/>
+                    <constraint firstItem="2Fc-oa-0Nl" firstAttribute="top" secondItem="l0x-43-dNo" secondAttribute="bottom" constant="7" id="dU1-hg-69F"/>
+                    <constraint firstAttribute="trailing" secondItem="2Fc-oa-0Nl" secondAttribute="trailing" constant="20" id="nBM-Td-aKC"/>
+                    <constraint firstItem="2Fc-oa-0Nl" firstAttribute="top" secondItem="5Zy-85-oIA" secondAttribute="bottom" constant="8" symbolic="YES" id="rAe-IG-trA"/>
+                    <constraint firstItem="5Zy-85-oIA" firstAttribute="top" secondItem="mkX-6z-Sgt" secondAttribute="top" constant="11" id="sMh-Xr-WIB"/>
+                    <constraint firstAttribute="bottom" secondItem="2Fc-oa-0Nl" secondAttribute="bottom" constant="10" id="wOl-I8-4Dv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dpLienButton" destination="2Fc-oa-0Nl" id="cNU-yD-u2v"/>
+                <outlet property="fundLienButton" destination="Vd0-oM-2nt" id="A5Y-cT-wpO"/>
+                <outlet property="valueInRupee" destination="l0x-43-dNo" id="ZIo-KW-eiC"/>
+                <outlet property="valueLabel" destination="5Zy-85-oIA" id="6pL-Ie-4ue"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

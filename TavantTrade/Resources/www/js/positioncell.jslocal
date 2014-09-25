@@ -1,0 +1,80 @@
+// Class to represent a row in the seat reservations grid
+var symbolData = [
+	];
+
+function PositionCell(idNo,symbol,companyName,ltp,avgCost,qty, profit,profitPer,rowColor,subscriptionKey,exchange,productType,instrumentType) {
+		var self = this;
+	    Ti.API.info('this is the idNo'+idNo+'this is the subkey'+subscriptionKey);
+		self.idNo = ko.observable(idNo);	
+	    self.symbol = ko.observable(symbol);
+		self.symbolBackgroundImage = profit > 0? ko.observable("url('../../images/pos_up_green_symbol_new.png')") : ko.observable("url('../../images/pos_down_red_symbol_new.png')");
+	    //self.symbolBackgroundColor = profit > 0? ko.observable("green") : ko.observable("red");
+	    self.companyName = ko.observable(companyName);	
+	    self.ltp = ko.observable(ltp);		
+	    self.avgCost = ko.observable(parseFloat(avgCost).toFixed(2));
+		self.qty = ko.observable(qty);
+	    self.pl = ko.observable(profit);
+	    self.profit = ko.observable((profit).toFixed(2) + '%');	
+		self.plColor = ko.observable() ;
+		self.plPerColor = profit > 0? ko.observable('green') : ko.observable('red');
+		self.rowImage = ko.observable(rowColor); // two color are #383B40 and #424449
+		self.subscriptionKey = ko.observable(subscriptionKey);
+		self.exchange = ko.observable(exchange);
+		self.productType = ko.observable(productType);
+		self.instrumentType = ko.observable(instrumentType);
+    	}
+	function PositionViewModel() {
+		var self = this;
+	    self.symbols = ko.observableArray(
+					
+	    );
+	   
+	    	self.updateSymbol = function(symbolData,i){
+			Ti.API.info('into JS function of positioncell'+i);
+			var wlArray = self.symbols();
+    		Ti.API.debug('Update meant to happen here: LENGTH OF ARRAY ' + symbolData[0]+'q'+symbolData[2]+'b'+symbolData[3]+'s'+symbolData[4]);
+    		
+    		wlArray[i].ltp(symbolData[0]);
+    		var percentage=0;
+    		var profit;
+    		if(symbolData[2]>=0){
+    			percentage = ((((symbolData[0]*symbolData[2])-symbolData[3])/symbolData[3])*100).toFixed(2);
+    			wlArray[i].plColor=percentage >= 0?('#3F9E0F'):('#DA2C2C');
+    			profit = ((symbolData[0]*symbolData[2])-symbolData[3]);
+    			wlArray[i].pl(profit.toFixed(2));
+				wlArray[i].profit(percentage+'%');
+    			Ti.API.info('this is ltp'+symbolData[0]+'this is net qty'+symbolData[2]+'this is buy amount'+symbolData[3]+'this is profit'+profit);
+    		}					
+		    else{
+		    	percentage= (((symbolData[4]-(symbolData[0]*symbolData[2]*(-1)))/symbolData[4])*100).toFixed(2);
+		    	wlArray[i].plColor=percentage >= 0?('#3F9E0F'):('#DA2C2C');
+		    	profit = symbolData[4]-(symbolData[0]*symbolData[2]);
+		    	wlArray[i].pl((symbolData[4]-(symbolData[0]*symbolData[2]*(-1))).toFixed(2));
+		    	wlArray[i].profit(percentage+'%');
+		    	Ti.API.info('this is ltp'+symbolData[0]+'this is net qty'+symbolData[2]+'this is sell amount'+symbolData[4]+'this is profit'+profit);
+//		    	wlArray[i].plColor=percentage >= 0?('green'):('red');
+		    }
+    		//wlArray[i].plColor=percentage >= 0?('#3F9E0F'):('#DA2C2C');
+    		Ti.API.info('~~~~~~~~profit percentage color is'+wlArray[i].plColor);
+		     };
+	
+			self.mapNewKeys=function(symbolUpdate,id,headerArray){
+		    if(symbolUpdate[0]!=0)	
+			self.symbols.push(new PositionCell(id,symbolUpdate[headerArray.indexOf('symbol')],symbolUpdate[headerArray.indexOf('symbol')],0,symbolUpdate[headerArray.indexOf('averagePrice')],symbolUpdate[headerArray.indexOf('netQty')],0,0,0,symbolUpdate[headerArray.indexOf('subKey')],symbolUpdate[headerArray.indexOf('exchange')],symbolUpdate[headerArray.indexOf('productType')],symbolUpdate[headerArray.indexOf('instrumentType')]));
+	 	
+   };
+		
+	};
+	
+	function openTrade(row){
+		var temp = row.cells[0].getElementsByTagName("div");
+		Ti.API.info('this is the symbol'+temp[1].innerHTML+'this is subscription Key'+temp[0].innerHTML+'this is the exchange'+temp[2].innerHTML+'this is the product Type'+temp[3].innerHTML+'inst'+temp[4].innerHTML);
+		var tradeData=[];
+		tradeData.push(temp[1].innerHTML);
+		tradeData.push(temp[0].innerHTML);
+		tradeData.push(temp[2].innerHTML);
+		tradeData.push(temp[3].innerHTML);
+		tradeData.push(temp[4].innerHTML);
+		Ti.App.fireEvent('openTradeWindow',{'dicData':tradeData});
+	}
+	

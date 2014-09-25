@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="FeedbackCategory" representedClassName="FeedbackCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subcategory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FeedbackSubCategory" inverseName="category" inverseEntity="FeedbackSubCategory" syncable="YES"/>
+    </entity>
+    <entity name="FeedbackSubCategory" representedClassName="FeedbackSubCategory" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FeedbackCategory" inverseName="subcategory" inverseEntity="FeedbackCategory" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="FeedbackCategory" positionX="-54" positionY="-9" width="128" height="73"/>
+        <element name="FeedbackSubCategory" positionX="-486" positionY="-198" width="128" height="73"/>
+    </elements>
+</model>
